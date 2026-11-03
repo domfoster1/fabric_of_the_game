@@ -1,0 +1,23 @@
+/* Main colours and website defaults */
+
+:root {
+    --cream: #F5F1E8;
+    --navy: #17283A;
+    --burgundy: #702C3B;
+    --gold: #C5A879;
+    --white: #FFFFFF;
+}
+
+body {
+    background-color: var(--cream);
+    color: var(--navy);
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+/* Make images fit their containers */
+
+img {
+    max-width: 100%;
+    height: auto;
+}
