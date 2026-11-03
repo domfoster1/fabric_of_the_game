@@ -1,9 +1,10 @@
 """
 Views for the My Collection page.
 """
-
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from .forms import ShirtForm, RegistrationForm
 from .forms import ShirtForm
 
 
@@ -30,3 +31,20 @@ def add_shirt(request):
         form = ShirtForm()
 
     return render(request, 'my_collection/add_shirt.html', {'form': form})
+
+
+def register(request):
+    """Allow a new user to create an account."""
+
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+
+    else:
+        form = RegistrationForm()
+
+    return render(request, 'registration/register.html', {'form': form})
