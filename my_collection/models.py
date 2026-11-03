@@ -1,9 +1,12 @@
+"""
+Database models for football shirt collections.
+"""
+
 from django.db import models
 
-# Create your models here.
 
 class Shirt(models.Model):
-"""Store information about a football shirt."""   
+    """Store information about a football shirt."""
 
     owner = models.ForeignKey(
         'auth.User',
@@ -11,11 +14,55 @@ class Shirt(models.Model):
         related_name='shirts'
     )
 
-team = models.CharField(max_length=100)
-season = models.CharField(max_length=30)
-shirt_type = models.CharField(max_length=20)
-issue = models.CharField(max_length=20)
-size = models.CharField(max_length=10)
-condition = models.CharField(max_length=30)
-description = models.TextField(blank=True)
-date_added = models.DateTimeField(auto_now_add=True)
+    team = models.CharField(max_length=100)
+    season = models.CharField(max_length=30)
+
+    shirt_type = models.CharField(
+        max_length=20,
+        choices=[
+            ('Home', 'Home'),
+            ('Away', 'Away'),
+            ('Third', 'Third'),
+            ('Goalkeeper', 'Goalkeeper'),
+            ('Training', 'Training'),
+            ('Other', 'Other'),
+        ]
+    )
+
+    issue = models.CharField(
+        max_length=20,
+        choices=[
+            ('Fan', 'Fan Issue'),
+            ('Player', 'Player Issue'),
+            ('Match Worn', 'Match Worn'),
+        ]
+    )
+
+    size = models.CharField(
+        max_length=10,
+        choices=[
+            ('Kids', 'Kids'),
+            ('S', 'S'),
+            ('M', 'M'),
+            ('L', 'L'),
+            ('XL', 'XL'),
+            ('XXL', '2XL'),
+            ('XXXL', '3XL'),
+            ('Other', 'Other'),
+        ]
+    )
+
+    condition = models.CharField(
+        max_length=30,
+        choices=[
+            ('New with tags', 'Brand new with tags'),
+            ('New without tags', 'Brand new without tags'),
+            ('Excellent', 'Excellent'),
+            ('Very good', 'Very good'),
+            ('Good', 'Good'),
+            ('Fair', 'Fair'),
+        ]
+    )
+
+    description = models.TextField(blank=True)
+    date_added = models.DateTimeField(auto_now_add=True)
