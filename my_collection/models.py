@@ -67,6 +67,10 @@ class Shirt(models.Model):
     description = models.TextField(blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        """Show the team and season of the shirt."""
+        return f"{self.team} - {self.season}"
+
 class ShirtImage(models.Model):
     """Store photographs of a football shirt."""
 
@@ -74,3 +78,7 @@ class ShirtImage(models.Model):
     shirt = models.ForeignKey(Shirt, on_delete=models.CASCADE, related_name='images')
     is_primary = models.BooleanField(default=False)
     date_uploaded = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        """Show which shirt the photograph belongs to."""
+        return f"Photo of {self.shirt}"
+    
