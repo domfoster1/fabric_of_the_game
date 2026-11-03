@@ -1,1 +1,1 @@
-web: gunicorn my_project.wsgi
+web: gunicorn fabric_of_the_game.wsgi
