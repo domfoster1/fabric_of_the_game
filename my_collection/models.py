@@ -66,3 +66,11 @@ class Shirt(models.Model):
 
     description = models.TextField(blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
+
+class ShirtImage(models.Model):
+    """Store photographs of a football shirt."""
+
+    image = models.ImageField(upload_to='shirt_images/')
+    shirt = models.ForeignKey(Shirt, on_delete=models.CASCADE, related_name='images')
+    is_primary = models.BooleanField(default=False)
+    date_uploaded = models.DateTimeField(auto_now_add=True)
