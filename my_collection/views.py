@@ -1,3 +1,7 @@
 from django.shortcuts import render
 
-# Create your views here.
+"""Display the user's shirt collection."""
+
+def my_collection(request):
+  
+    return render(request, 'my_collection/collection.html')
