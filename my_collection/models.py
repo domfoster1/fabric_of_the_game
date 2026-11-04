@@ -156,6 +156,7 @@ def delete_shirt_image_file(sender, instance, **kwargs):
         instance.image.delete(save=False)   
 
 class Comment(models.Model):
+
     """Store comments left on football shirts."""
 
     shirt = models.ForeignKey(
@@ -172,7 +173,9 @@ class Comment(models.Model):
 
     content = models.TextField(max_length=500)
     date_added = models.DateTimeField(auto_now_add=True)
+    approved = models.BooleanField(default=False)
 
     def __str__(self):
         """Show who wrote the comment."""
         return f"Comment by {self.owner} on {self.shirt}"
+

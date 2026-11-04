@@ -35,8 +35,13 @@
                 <h3>Comments</h3>
 
                 {% for comment in shirt.comments.all %}
+                {% if comment.approved or user == comment.owner or user.is_staff %}
                 <div>
                 <p>{{ comment.content }}</p>
+
+                {% if not comment.approved %}
+                <p>Awaiting admin approval</p>
+                {% endif %}
 
                 <small>
                 Posted by {{ comment.owner.username }}
@@ -49,10 +54,12 @@
                 <a href="{% url 'delete_comment' comment.id %}">Delete</a>
                 {% endif %}
                 </div>
-                
+                {% endif %}
                 {% empty %}
-                <p>No comments yet.</p>
+                    <p>No comments yet.</p>
                 {% endfor %}
+                
+                
 
                 <!-- Let logged-in users comment on other shirts -->
                 {% if user.is_authenticated and user != shirt.owner %}

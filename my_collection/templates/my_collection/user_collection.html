@@ -12,10 +12,9 @@
 
                 <!-- Only let the owner manage their own shirts -->
                 {% if user.is_authenticated and user == shirt.owner %}
-                <a href="{% url 'edit_shirt' shirt.id %}">Edit Shirt</a>
-                <a href="{% url 'delete_shirt' shirt.id %}">Delete Shirt</a>
+                    <a href="{% url 'edit_shirt' shirt.id %}">Edit Shirt</a>
+                    <a href="{% url 'delete_shirt' shirt.id %}">Delete Shirt</a>
                 {% endif %}
-
 
                 <p>Season: {{ shirt.season }}</p>
                 <p>Type: {{ shirt.get_shirt_type_display }}</p>
@@ -41,31 +40,37 @@
                 <h3>Comments</h3>
 
                 {% for comment in shirt.comments.all %}
-                <div>
-                <p>{{ comment.content }}</p>
+                    {% if comment.approved or user == comment.owner or user.is_staff %}
+                        <div>
+                            <p>{{ comment.content }}</p>
 
-                <small>
-                Posted by {{ comment.owner.username }}
-                on {{ comment.date_added|date:"d M Y" }}
-                </small>
+                            {% if not comment.approved %}
+                                <p>Awaiting admin approval</p>
+                            {% endif %}
 
-                <!-- Only let the comment owner edit or delete their comment -->
-                {% if user.is_authenticated and user == comment.owner %}
-                <a href="{% url 'edit_comment' comment.id %}">Edit</a>
-                <a href="{% url 'delete_comment' comment.id %}">Delete</a>
-                {% endif %}
-                </div>
+                            <small>
+                                Posted by {{ comment.owner.username }}
+                                on {{ comment.date_added|date:"d M Y" }}
+                            </small>
+
+                            <!-- Only let the comment owner edit or delete their comment -->
+                            {% if user.is_authenticated and user == comment.owner %}
+                                <a href="{% url 'edit_comment' comment.id %}">Edit</a>
+                                <a href="{% url 'delete_comment' comment.id %}">Delete</a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 {% empty %}
                     <p>No comments yet.</p>
                 {% endfor %}
 
                 <!-- Allow logged-in users to add a comment -->
                 {% if user.is_authenticated %}
-                <form method="POST" action="{% url 'add_comment' shirt.id %}">
-                {% csrf_token %}
-                <textarea name="content" rows="3" maxlength="500" placeholder="Write a comment..." required></textarea>
-                <button type="submit">Post Comment</button>
-                </form>
+                    <form method="POST" action="{% url 'add_comment' shirt.id %}">
+                        {% csrf_token %}
+                        <textarea name="content" rows="3" maxlength="500" placeholder="Write a comment..." required></textarea>
+                        <button type="submit">Post Comment</button>
+                    </form>
                 {% else %}
                     <p><a href="{% url 'login' %}">Log in</a> to leave a comment.</p>
                 {% endif %}
