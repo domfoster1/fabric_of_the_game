@@ -1,6 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
     <h1>Welcome to Fabric of the Game</h1>
     <p>A community for football shirt collectors.</p>
+
+    <!-- Display all shirts uploaded by members -->
+    <h2>Latest Shirts</h2>
+
+    {% if shirts %}
+        {% for shirt in shirts %}
+            <div>
+                <h3>{{ shirt.team }}</h3>
+                <p>
+                Added by:
+                <a href="{% url 'user_collection' shirt.owner.username %}">
+                {{ shirt.owner.username }}
+                </a>
+                </p>
+                <p>Season: {{ shirt.season }}</p>
+                <p>Manufacturer: {{ shirt.manufacturer }}</p>
+                <p>Country: {{ shirt.get_country_display }}</p>
+                <p>League: {{ shirt.league }}</p>
+
+                <!-- Display the shirt photographs -->
+                {% for image in shirt.images.all %}
+                    <img src="{{ image.image.url }}" alt="Photograph of {{ shirt.team }}" width="200">
+                {% endfor %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No shirts have been added yet.</p>
+    {% endif %}
+
 {% endblock %}

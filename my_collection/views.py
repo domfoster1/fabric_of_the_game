@@ -7,6 +7,7 @@ from urllib import request
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.models import User
 from .forms import ShirtForm, ShirtImageForm, RegistrationForm
 from .forms import ShirtForm
 from .models import Shirt, ShirtImage
@@ -93,3 +94,14 @@ def register(request):
         form = RegistrationForm()
 
     return render(request, 'registration/register.html', {'form': form})
+
+def user_collection(request, username):
+    """Display a user's public shirt collection."""
+
+    collection_owner = get_object_or_404(User, username=username)
+    shirts = Shirt.objects.filter(owner=collection_owner)
+
+    return render(request, 'my_collection/user_collection.html', {
+        'collection_owner': collection_owner,
+        'shirts': shirts
+    })

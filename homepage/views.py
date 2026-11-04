@@ -1,6 +1,16 @@
-from django.shortcuts import render
+"""
+Views for the homepage.
+"""
 
-# Create your views here.
+from django.shortcuts import render
+from my_collection.models import Shirt
+
 
 def home(request):
-    return render(request, 'homepage/home.html')
+    """Display the homepage and all uploaded shirts."""
+
+    shirts = Shirt.objects.all().order_by('-date_added')
+
+    return render(request, 'homepage/home.html', {
+        'shirts': shirts
+    })
