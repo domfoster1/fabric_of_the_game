@@ -6,11 +6,25 @@
     {% for shirt in shirts %}
         <div>
             <h2>{{ shirt.team }}</h2>
+
+            <!-- Only show edit and delete buttons to the shirt's owner -->
+            {% if user.is_authenticated and user == shirt.owner %}
+            <a href="{% url 'edit_shirt' shirt.id %}">Edit Shirt</a>
+
+            <a href="{% url 'delete_shirt' shirt.id %}">Delete Shirt</a>
+            {% endif %}
+
+
             <p>Season: {{ shirt.season }}</p>
             <p>Type: {{ shirt.get_shirt_type_display }}</p>
             <p>Condition: {{ shirt.get_condition_display }}</p>
             <p>Size: {{ shirt.get_size_display }}</p>
             <p>{{ shirt.description }}</p>
+
+            <!-- Display all photographs uploaded for this shirt -->
+            {% for image in shirt.images.all %}
+            <img src="{{ image.image.url }}" alt="Photograph of {{ shirt.team }}" width="200">
+            {% endfor %}
         </div>
     {% endfor %}
 {% else %}

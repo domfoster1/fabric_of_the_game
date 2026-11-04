@@ -6,7 +6,7 @@ from urllib import request
 
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ShirtForm, ShirtImageForm, RegistrationForm
 from .forms import ShirtForm
 from .models import Shirt, ShirtImage
@@ -48,6 +48,35 @@ def add_shirt(request):
 
     return render(request, 'my_collection/add_shirt.html', {'form': form})
 
+@login_required
+def edit_shirt(request, shirt_id):
+    """Allow a user to edit their own shirt."""
+
+    shirt = get_object_or_404(Shirt, id=shirt_id, owner=request.user)
+
+    if request.method == 'POST':
+        form = ShirtForm(request.POST, instance=shirt)
+
+        if form.is_valid():
+            form.save()
+            return redirect('my_collection')
+
+    else:
+        form = ShirtForm(instance=shirt)
+
+    return render(request, 'my_collection/edit_shirt.html', {'form': form})
+
+@login_required
+def delete_shirt(request, shirt_id):
+    """Allow a user to delete their own shirt."""
+
+    shirt = get_object_or_404(Shirt, id=shirt_id, owner=request.user)
+
+    if request.method == 'POST':
+        shirt.delete()
+        return redirect('my_collection')
+
+    return render(request, 'my_collection/delete_shirt.html', {'shirt': shirt})
 
 def register(request):
     """Allow a new user to create an account."""

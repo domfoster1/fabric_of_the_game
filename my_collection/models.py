@@ -3,7 +3,8 @@ Database models for football shirt collections.
 """
 
 from django.db import models
-
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 class Shirt(models.Model):
     """Store information about a football shirt."""
@@ -81,4 +82,11 @@ class ShirtImage(models.Model):
     def __str__(self):
         """Show which shirt the photograph belongs to."""
         return f"Photo of {self.shirt}"
-    
+
+# Delete the photograph file when its database record is deleted
+@receiver(post_delete, sender=ShirtImage)
+def delete_shirt_image_file(sender, instance, **kwargs):
+    """Delete the uploaded photograph from storage."""
+
+    if instance.image:
+        instance.image.delete(save=False)   

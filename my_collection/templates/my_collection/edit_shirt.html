@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>Edit Shirt</h1>
+
+    <!-- Form for updating the shirt details -->
+    <form method="POST">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">Save Changes</button>
+    </form>
+
+{% endblock %}

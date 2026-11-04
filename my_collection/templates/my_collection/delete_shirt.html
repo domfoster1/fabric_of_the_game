@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>Delete Shirt</h1>
+
+    <!-- Ask the user to confirm before deleting the shirt -->
+    <p>Are you sure you want to delete your {{ shirt.team }} shirt?</p>
+
+    <!-- Submit the deletion request -->
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Yes, Delete Shirt</button>
+    </form>
+
+    <!-- Give the user a way to cancel -->
+    <a href="{% url 'my_collection' %}">Cancel</a>
+
+{% endblock %}
