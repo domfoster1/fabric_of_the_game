@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 
 {% block content %}
@@ -12,12 +13,14 @@
         {% for shirt in shirts %}
             <div>
                 <h3>{{ shirt.team }}</h3>
+
                 <p>
-                Added by:
-                <a href="{% url 'user_collection' shirt.owner.username %}">
-                {{ shirt.owner.username }}
-                </a>
+                    Added by:
+                    <a href="{% url 'user_collection' shirt.owner.username %}">
+                        {{ shirt.owner.username }}
+                    </a>
                 </p>
+
                 <p>Season: {{ shirt.season }}</p>
                 <p>Manufacturer: {{ shirt.manufacturer }}</p>
                 <p>Country: {{ shirt.get_country_display }}</p>
@@ -27,6 +30,36 @@
                 {% for image in shirt.images.all %}
                     <img src="{{ image.image.url }}" alt="Photograph of {{ shirt.team }}" width="200">
                 {% endfor %}
+
+                <!-- Show comments left on this shirt -->
+                <h3>Comments</h3>
+
+                {% for comment in shirt.comments.all %}
+                    <div>
+                        <p>{{ comment.content }}</p>
+                        <small>
+                            Posted by {{ comment.owner.username }}
+                            on {{ comment.date_added|date:"d M Y" }}
+                        </small>
+                    </div>
+                {% empty %}
+                    <p>No comments yet.</p>
+                {% endfor %}
+
+                <!-- Let logged-in users comment on other shirts -->
+                {% if user.is_authenticated and user != shirt.owner %}
+                    <form method="POST" action="{% url 'add_comment' shirt.id %}?next=home">
+                        {% csrf_token %}
+                        <textarea name="content" rows="3" maxlength="500" placeholder="Write a comment..." required></textarea>
+                        <button type="submit">Post Comment</button>
+                    </form>
+                {% elif not user.is_authenticated %}
+                    <p>
+                        <a href="{% url 'login' %}">Log in</a>
+                        to leave a comment.
+                    </p>
+                {% endif %}
+
             </div>
         {% endfor %}
     {% else %}

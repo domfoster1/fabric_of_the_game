@@ -5,7 +5,7 @@ Shirt forms.
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Shirt, ShirtImage
+from .models import Shirt, ShirtImage, Comment
 
 class ShirtForm(forms.ModelForm):
     """Form for adding a football shirt."""
@@ -38,3 +38,16 @@ class RegistrationForm(UserCreationForm):
             raise forms.ValidationError('This email address is already registered.')
 
         return email
+
+class CommentForm(forms.ModelForm):
+    """Form for adding a comment to a shirt."""
+
+    class Meta:
+        model = Comment
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={
+                'placeholder': 'Write a comment...',
+                'rows': 3
+            })
+        }    

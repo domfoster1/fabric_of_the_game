@@ -16,7 +16,7 @@
                 <a href="{% url 'delete_shirt' shirt.id %}">Delete Shirt</a>
                 {% endif %}
 
-                
+
                 <p>Season: {{ shirt.season }}</p>
                 <p>Type: {{ shirt.get_shirt_type_display }}</p>
                 <p>Manufacturer: {{ shirt.manufacturer }}</p>
@@ -36,6 +36,30 @@
                 {% endif %}
 
                 <p>{{ shirt.description }}</p>
+
+                <!-- Display comments left on this shirt -->
+                 <!-- Display comments left on this shirt -->
+                <h3>Comments</h3>
+
+                {% for comment in shirt.comments.all %}
+                <div>
+                <p>{{ comment.content }}</p>
+                <small>Posted by {{ comment.owner.username }} on {{ comment.date_added|date:"d M Y" }}</small>
+                </div>
+                {% empty %}
+                <p>No comments yet.</p>
+                {% endfor %}
+
+                <!-- Allow logged-in users to add a comment -->
+                {% if user.is_authenticated %}
+                <form method="POST" action="{% url 'add_comment' shirt.id %}">
+                {% csrf_token %}
+                <textarea name="content" rows="3" maxlength="500" placeholder="Write a comment..." required></textarea>
+                <button type="submit">Post Comment</button>
+                </form>
+                {% else %}
+                    <p><a href="{% url 'login' %}">Log in</a> to leave a comment.</p>
+                {% endif %}
 
                 <!-- Display all photographs of the shirt -->
                 {% for image in shirt.images.all %}

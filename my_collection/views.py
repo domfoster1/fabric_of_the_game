@@ -8,9 +8,9 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
-from .forms import ShirtForm, ShirtImageForm, RegistrationForm
+from .forms import ShirtForm, ShirtImageForm, RegistrationForm, CommentForm
 from .forms import ShirtForm
-from .models import Shirt, ShirtImage
+from .models import Shirt, ShirtImage, Comment
 
 
 @login_required
@@ -105,3 +105,23 @@ def user_collection(request, username):
         'collection_owner': collection_owner,
         'shirts': shirts
     })
+
+@login_required
+def add_comment(request, shirt_id):
+    """Allow a logged-in user to comment on a shirt."""
+
+    shirt = get_object_or_404(Shirt, id=shirt_id)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.shirt = shirt
+            comment.owner = request.user
+            comment.save()
+
+    if request.GET.get('next') == 'home':
+        return redirect('home')
+
+    return redirect('user_collection', username=shirt.owner.username)
