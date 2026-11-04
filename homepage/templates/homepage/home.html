@@ -1,10 +1,63 @@
-
+```html
 {% extends 'base.html' %}
 
 {% block content %}
 
     <h1>Welcome to Fabric of the Game</h1>
     <p>A community for football shirt collectors.</p>
+
+    <!-- Search and filter shirts -->
+    <h2>Find a Shirt</h2>
+
+    <form method="GET">
+        <p>
+            <label for="team">Team:</label>
+            <input type="text" name="team" id="team" value="{{ request.GET.team|default:'' }}" placeholder="Search by team">
+        </p>
+
+        <p>
+            <label for="season">Season:</label>
+            <input type="text" name="season" id="season" value="{{ request.GET.season|default:'' }}" placeholder="e.g. 2024/25">
+        </p>
+
+        <p>
+            <label for="manufacturer">Manufacturer:</label>
+            <select name="manufacturer" id="manufacturer">
+                <option value="">All manufacturers</option>
+                {% for value, label in manufacturer_choices %}
+                    <option value="{{ value }}" {% if request.GET.manufacturer == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </p>
+
+        <p>
+            <label for="country">Country:</label>
+            <select name="country" id="country">
+                <option value="">All countries</option>
+                {% for value, label in country_choices %}
+                    <option value="{{ value }}" {% if request.GET.country == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </p>
+
+        <p>
+            <label for="league">League:</label>
+            <select name="league" id="league">
+                <option value="">All leagues</option>
+                {% for value, label in league_choices %}
+                    <option value="{{ value }}" {% if request.GET.league == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </p>
+
+        <p>
+            <label for="player">Player:</label>
+            <input type="text" name="player" id="player" value="{{ request.GET.player|default:'' }}" placeholder="Search by player">
+        </p>
+
+        <button type="submit">Search</button>
+        <a href="{% url 'home' %}">Clear Filters</a>
+    </form>
 
     <!-- Display all shirts uploaded by members -->
     <h2>Latest Shirts</h2>
@@ -35,31 +88,29 @@
                 <h3>Comments</h3>
 
                 {% for comment in shirt.comments.all %}
-                {% if comment.approved or user == comment.owner or user.is_staff %}
-                <div>
-                <p>{{ comment.content }}</p>
+                    {% if comment.approved or user == comment.owner or user.is_staff %}
+                        <div>
+                            <p>{{ comment.content }}</p>
 
-                {% if not comment.approved %}
-                <p>Awaiting admin approval</p>
-                {% endif %}
+                            {% if not comment.approved %}
+                                <p>Awaiting admin approval</p>
+                            {% endif %}
 
-                <small>
-                Posted by {{ comment.owner.username }}
-                on {{ comment.date_added|date:"d M Y" }}
-                </small>
+                            <small>
+                                Posted by {{ comment.owner.username }}
+                                on {{ comment.date_added|date:"d M Y" }}
+                            </small>
 
-                <!-- Only let the comment owner edit or delete their comment -->
-                {% if user.is_authenticated and user == comment.owner %}
-                <a href="{% url 'edit_comment' comment.id %}">Edit</a>
-                <a href="{% url 'delete_comment' comment.id %}">Delete</a>
-                {% endif %}
-                </div>
-                {% endif %}
+                            <!-- Only let the comment owner edit or delete their comment -->
+                            {% if user.is_authenticated and user == comment.owner %}
+                                <a href="{% url 'edit_comment' comment.id %}">Edit</a>
+                                <a href="{% url 'delete_comment' comment.id %}">Delete</a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 {% empty %}
                     <p>No comments yet.</p>
                 {% endfor %}
-                
-                
 
                 <!-- Let logged-in users comment on other shirts -->
                 {% if user.is_authenticated and user != shirt.owner %}
@@ -78,7 +129,8 @@
             </div>
         {% endfor %}
     {% else %}
-        <p>No shirts have been added yet.</p>
+        <p>No shirts match your search.</p>
     {% endif %}
 
 {% endblock %}
+```

@@ -15,12 +15,42 @@ from .models import Shirt, ShirtImage, Comment
 
 @login_required
 def my_collection(request):
-    """Display the user's shirt collection."""
+    """Display the user's shirt collection and filter shirts."""
 
-    shirts = Shirt.objects.filter(owner=request.user)
+    shirts = Shirt.objects.filter(owner=request.user).order_by('-date_added')
+
+    # Get the search and filter values
+    team = request.GET.get('team')
+    season = request.GET.get('season')
+    manufacturer = request.GET.get('manufacturer')
+    country = request.GET.get('country')
+    league = request.GET.get('league')
+    player = request.GET.get('player')
+
+    # Filter the user's shirts using the values entered
+    if team:
+        shirts = shirts.filter(team__icontains=team)
+
+    if season:
+        shirts = shirts.filter(season__icontains=season)
+
+    if manufacturer:
+        shirts = shirts.filter(manufacturer=manufacturer)
+
+    if country:
+        shirts = shirts.filter(country=country)
+
+    if league:
+        shirts = shirts.filter(league=league)
+
+    if player:
+        shirts = shirts.filter(player_name__icontains=player)
 
     return render(request, 'my_collection/collection.html', {
-        'shirts': shirts
+        'shirts': shirts,
+        'manufacturer_choices': Shirt._meta.get_field('manufacturer').choices,
+        'country_choices': Shirt._meta.get_field('country').choices,
+        'league_choices': Shirt._meta.get_field('league').choices,
     })
 
 
