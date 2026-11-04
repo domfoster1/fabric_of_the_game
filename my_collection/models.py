@@ -3,8 +3,42 @@ Database models for football shirt collections.
 """
 
 from django.db import models
+from django_countries import countries
+from django_countries.fields import CountryField
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
+
+COUNTRIES = [
+    ('GB-ENG', 'England'),
+    ('GB-SCT', 'Scotland'),
+    ('GB-WLS', 'Wales'),
+    ('GB-NIR', 'Northern Ireland'),
+] + [
+    (code, name)
+    for code, name in countries
+    if code != 'GB'
+]
+
+LEAGUES = [
+    ('Premier League', 'Premier League'),
+    ('Championship', 'Championship'),
+    ('League One', 'League One'),
+    ('League Two', 'League Two'),
+    ('Scottish Premiership', 'Scottish Premiership'),
+    ('Scottish Championship', 'Scottish Championship'),
+    ('Cymru Premier', 'Cymru Premier'),
+    ('NIFL Premiership', 'NIFL Premiership'),
+    ('La Liga', 'La Liga'),
+    ('Bundesliga', 'Bundesliga'),
+    ('Serie A', 'Serie A'),
+    ('Ligue 1', 'Ligue 1'),
+    ('MLS', 'MLS'),
+    ('Brazilian Serie A', 'Brazilian Serie A'),
+    ('J1 League', 'J1 League'),
+    ('J2 League', 'J2 League'),
+    ('J3 League', 'J3 League'),
+    ('Other', 'Other'),
+]
 
 class Shirt(models.Model):
     """Store information about a football shirt."""
@@ -17,6 +51,35 @@ class Shirt(models.Model):
 
     team = models.CharField(max_length=100)
     season = models.CharField(max_length=30)
+
+    manufacturer = models.CharField(
+    max_length=30,
+    choices=[
+        ('Adidas', 'Adidas'),
+        ('Nike', 'Nike'),
+        ('Puma', 'Puma'),
+        ('Umbro', 'Umbro'),
+        ('New Balance', 'New Balance'),
+        ('Kappa', 'Kappa'),
+        ('Macron', 'Macron'),
+        ('Hummel', 'Hummel'),
+        ('Castore', 'Castore'),
+        ('Other', 'Other'),
+    ]
+    )
+
+    country = models.CharField(
+    max_length=100,
+    choices=COUNTRIES,
+    )
+
+    league = models.CharField(
+    max_length=50,
+    choices=LEAGUES,
+    )
+
+    player_name = models.CharField(max_length=100, blank=True)
+    shirt_number = models.PositiveSmallIntegerField(null=True, blank=True)
 
     shirt_type = models.CharField(
         max_length=20,

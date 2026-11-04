@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'homepage',
     'my_collection',
+    'django_countries',
 ]
 
 MIDDLEWARE = [
