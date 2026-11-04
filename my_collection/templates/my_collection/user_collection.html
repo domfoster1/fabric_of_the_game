@@ -38,16 +38,25 @@
                 <p>{{ shirt.description }}</p>
 
                 <!-- Display comments left on this shirt -->
-                 <!-- Display comments left on this shirt -->
                 <h3>Comments</h3>
 
                 {% for comment in shirt.comments.all %}
                 <div>
                 <p>{{ comment.content }}</p>
-                <small>Posted by {{ comment.owner.username }} on {{ comment.date_added|date:"d M Y" }}</small>
+
+                <small>
+                Posted by {{ comment.owner.username }}
+                on {{ comment.date_added|date:"d M Y" }}
+                </small>
+
+                <!-- Only let the comment owner edit or delete their comment -->
+                {% if user.is_authenticated and user == comment.owner %}
+                <a href="{% url 'edit_comment' comment.id %}">Edit</a>
+                <a href="{% url 'delete_comment' comment.id %}">Delete</a>
+                {% endif %}
                 </div>
                 {% empty %}
-                <p>No comments yet.</p>
+                    <p>No comments yet.</p>
                 {% endfor %}
 
                 <!-- Allow logged-in users to add a comment -->

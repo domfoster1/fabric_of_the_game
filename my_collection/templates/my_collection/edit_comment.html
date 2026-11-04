@@ -1,0 +1,17 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>Edit Comment</h1>
+
+    <!-- Allow the user to update their comment -->
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">Save Changes</button>
+        <a href="{% url 'home' %}">Cancel</a>
+    </form>
+
+{% endblock %}

@@ -125,3 +125,40 @@ def add_comment(request, shirt_id):
         return redirect('home')
 
     return redirect('user_collection', username=shirt.owner.username)
+
+@login_required
+def edit_comment(request, comment_id):
+    """Allow a user to edit their own comment."""
+
+    comment = get_object_or_404(Comment, id=comment_id, owner=request.user)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)
+
+        if form.is_valid():
+            form.save()
+            return redirect('user_collection', username=comment.shirt.owner.username)
+
+    else:
+        form = CommentForm(instance=comment)
+
+    return render(request, 'my_collection/edit_comment.html', {
+        'form': form
+    })
+
+
+@login_required
+def delete_comment(request, comment_id):
+    """Allow a user to delete their own comment."""
+
+    comment = get_object_or_404(Comment, id=comment_id, owner=request.user)
+
+    if request.method == 'POST':
+        username = comment.shirt.owner.username
+        comment.delete()
+        return redirect('user_collection', username=username)
+
+    return render(request, 'my_collection/delete_comment.html', {
+        'comment': comment
+    })
+

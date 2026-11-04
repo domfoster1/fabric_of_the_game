@@ -9,4 +9,6 @@ urlpatterns = [
     path('delete/<int:shirt_id>/', views.delete_shirt, name='delete_shirt'),
     path('user/<str:username>/', views.user_collection, name='user_collection'),
     path('comment/<int:shirt_id>/', views.add_comment, name='add_comment'),
+    path('comment/edit/<int:comment_id>/', views.edit_comment, name='edit_comment'),
+    path('comment/delete/<int:comment_id>/', views.delete_comment, name='delete_comment'),
 ]
