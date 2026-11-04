@@ -2,5 +2,18 @@
 
 {% block content %}
     <h1>My Collection</h1>
-    <p>Your football shirt collection will appear here.</p>
+    {% if shirts %}
+    {% for shirt in shirts %}
+        <div>
+            <h2>{{ shirt.team }}</h2>
+            <p>Season: {{ shirt.season }}</p>
+            <p>Type: {{ shirt.get_shirt_type_display }}</p>
+            <p>Condition: {{ shirt.get_condition_display }}</p>
+            <p>Size: {{ shirt.get_size_display }}</p>
+            <p>{{ shirt.description }}</p>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>You haven't added any shirts to your collection yet.</p>
+{% endif %}
 {% endblock %}

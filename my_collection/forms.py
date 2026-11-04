@@ -5,7 +5,7 @@ Shirt forms.
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Shirt
+from .models import Shirt, ShirtImage
 
 class ShirtForm(forms.ModelForm):
     """Form for adding a football shirt."""
@@ -13,6 +13,13 @@ class ShirtForm(forms.ModelForm):
     class Meta:
         model = Shirt
         exclude = ['owner', 'date_added']
+
+class ShirtImageForm(forms.ModelForm):
+    """Form for uploading a shirt photo."""
+
+    class Meta:
+        model = ShirtImage
+        fields = ['image']
 
 class RegistrationForm(UserCreationForm):
     """Form for creating a new user account."""

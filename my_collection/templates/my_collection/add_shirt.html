@@ -3,10 +3,13 @@
 {% block content %}
     <h1>Add a Shirt</h1>
 
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-
+<!-- Allow users to select multiple shirt photographs -->
         {{ form.as_p }}
+
+        <label for="images">Upload shirt photographs:</label>
+        <input type="file" name="images" id="images" multiple>
 
         <button type="submit">Add Shirt</button>
     </form>
