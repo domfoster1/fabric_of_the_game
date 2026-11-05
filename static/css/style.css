@@ -4,7 +4,6 @@
     --cream: #F5F1E8;
     --navy: #17283A;
     --burgundy: #702C3B;
-    --gold: #C5A879;
     --white: #FFFFFF;
 }
 
@@ -20,4 +19,190 @@ body {
 img {
     max-width: 100%;
     height: auto;
+}
+
+/* Navigation bar */
+
+.site-navbar {
+    background-color: var(--navy);
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--burgundy);
+}
+
+/* Website name in the navigation bar */
+
+.navbar-brand {
+    color: var(--white);
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.navbar-brand:hover {
+    color: var(--cream);
+}
+
+/* Navigation links */
+
+.site-navbar .nav-link {
+    color: var(--white);
+}
+
+.site-navbar .nav-link:hover {
+    color: var(--gold);
+}
+
+/* Space between navigation links */
+
+.site-navbar .nav-item {
+    margin-left: 10px;
+}
+
+/* Search */
+
+/* Keep search fields a sensible width */
+
+.form-control,
+.form-select {
+    max-width: 300px;
+}
+
+/* Search button */
+
+.search-button {
+    background-color: var(--navy);
+    color: var(--white);
+    border: 1px solid var(--navy);
+}
+
+.search-button:hover {
+    background-color: var(--burgundy);
+    border-color: var(--burgundy);
+    color: var(--white);
+}
+
+/* Homepage welcome section */
+
+.welcome-section {
+    margin-bottom: 30px;
+}
+
+.welcome-section h1 {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Section headings */
+
+.section-heading {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Individual shirt cards */
+
+.shirt-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: var(--white);
+    padding: 0;
+}
+
+
+
+/* Shirt photograph carousel */
+
+.shirt-carousel {
+    width: 75%;
+    margin: 0 auto 20px;
+}
+
+.shirt-carousel img {
+    width: 75%;
+    height: 220px;
+    object-fit: contain;
+    background-color: var(--cream);
+    border-radius: 6px;
+}
+
+/* Make carousel arrows easier to see */
+
+.shirt-carousel .carousel-control-prev-icon,
+.shirt-carousel .carousel-control-next-icon {
+    background-color: var(--navy);
+    border-radius: 50%;
+    background-size: 60%;
+}
+
+/* Shirt information below the photos */
+.shirt-details {
+    background-color: var(--cream);
+    border-left: 3px solid var(--burgundy);
+    padding: 12px;
+    margin-top: 15px;
+    border-radius: 5px;
+}
+
+.shirt-details p {
+    margin-bottom: 6px;
+}
+
+/* Links inside the shirt information */
+.shirt-details a {
+    color: var(--burgundy);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.shirt-details a:hover {
+    color: var(--navy);
+    text-decoration: underline;
+}
+
+/* Comments heading inside shirt cards */
+
+.comments-heading {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+/* Shirt card heading */
+
+.shirt-card-header {
+    background-color: var(--navy);
+    color: var(--white);
+    border-bottom: 3px solid var(--burgundy);
+    padding: 15px;
+}
+
+.shirt-card-header h3 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.shirt-card-header span {
+    font-size: 14px;
+    color: var(--white);
+}
+
+/* Shirt information */
+
+.shirt-details {
+    background-color: var(--cream);
+    border-left: 3px solid var(--burgundy);
+    border-radius: 5px;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+}
+
+.shirt-details p {
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.shirt-details p:last-child {
+    margin-bottom: 0;
 }
