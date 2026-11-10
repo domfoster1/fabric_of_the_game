@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,10 +16,8 @@
 
 <body>
 
-    <body>
-
-    <!-- Main navigation bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark site-navbar">
+    <!-- Main navigation bar fixed to the top of the page -->
+    <nav class="navbar navbar-expand-lg navbar-dark site-navbar fixed-top">
         <div class="container">
 
             <a class="navbar-brand" href="{% url 'home' %}">
@@ -51,7 +48,8 @@
                         </li>
 
                         <li class="nav-item">
-                            <form method="POST" action="{% url 'logout' %}">
+                            <form method="POST" action="{% url 'logout' %}"
+                            onsubmit="return confirm('Are you sure you want to log out?');">
                                 {% csrf_token %}
                                 <button type="submit" class="nav-link border-0 bg-transparent">
                                     Logout
@@ -79,12 +77,13 @@
 
     <!-- Main page content -->
     <main class="container py-4">
-    {% block content %}
-    {% endblock %}
-</main>
+        {% block content %}
+        {% endblock %}
+    </main>
 
     <!-- Bootstrap JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
+```
