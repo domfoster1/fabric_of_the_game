@@ -37,6 +37,9 @@ ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    # Django static files
+    'django.contrib.staticfiles',
+
     # Cloudinary
     'cloudinary_storage',
     'cloudinary',
@@ -47,12 +50,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-
-    # Project apps
-    'homepage',
-    'my_collection',
-    'django_countries',
 ]
 
 MIDDLEWARE = [
@@ -136,7 +133,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # Where Django collects static files for deployment
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STORAGES = {
     'default': {
