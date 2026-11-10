@@ -115,3 +115,40 @@ Cloudinary has been configured locally and on Heroku, and image uploads and disp
 - [Cloudinary](https://cloudinary.com/) – Used for storing and displaying uploaded shirt photographs.
 - [django-countries](https://pypi.org/project/django-countries/) – Used to provide country choices.
 - [django-crispy-forms](https://django-crispy-forms.readthedocs.io/) and [crispy-bootstrap5](https://pypi.org/project/crispy-bootstrap5/) – Used for form rendering and Bootstrap styling.
+
+## Manual Testing
+
+Manual testing was carried out on Fabric of the Game to check that the website's main features work correctly. The tests covered user registration and login, shirt management, comments, search and filtering, permissions, image uploads and responsive design.
+
+The following table shows the tests performed, the expected results and the actual results.
+
+| Test | Action | Expected Result | Actual Result | Status |
+|---|---|---|---|---|
+| Register a new account | Enter valid registration details and submit the form. | A new account is created successfully. | The account was created successfully. | Pass |
+| Log in | Enter a registered username and password and submit the form. | The user is logged in successfully. | Login was successful. | Pass |
+| Log out | Click Logout and confirm by selecting OK. | The user is logged out successfully. | Logout was successful. | Pass |
+| Incorrect login details | Enter a correct username with an incorrect password. | Login is rejected and an error message is displayed. | Login was rejected and an error message appeared. | Pass |
+| Access My Collection when logged out | Log out and check the navbar, then try to access the My Collection page directly. | My Collection is hidden from the navbar and access is restricted to logged-in users. | My Collection was hidden from the navbar when logged out, and access was restricted. | Pass |
+| Add a shirt | Complete the shirt form, upload a photograph and submit it. | The shirt is saved and appears in the user's collection. | The shirt was saved and appeared in the collection. | Pass |
+| Edit a shirt | Open a shirt, change one detail and save the changes. | The updated shirt details are displayed. | The shirt details updated successfully. | Pass |
+| Delete a shirt | Select Delete Shirt and confirm the deletion. | The shirt is deleted and no longer appears in the collection. | The shirt was deleted successfully and disappeared from the collection. | Pass |
+| Cancel shirt deletion | Select Delete Shirt, then choose Cancel on the confirmation page. | The shirt remains in the collection. | The shirt remained in the collection after cancelling. | Pass |
+| Upload multiple photographs | Add a shirt with two or more photographs. | All photographs are saved and displayed in the shirt's image carousel. | All photographs uploaded and displayed correctly. | Pass |
+| Search for shirts | Enter a team name in the search box and click Search. | Shirts matching the search term are displayed. | Matching shirts were displayed successfully. | Pass |
+| Filter shirts | Apply the available filters, including season and league. | Only shirts matching the selected filters are displayed. | All available filters worked correctly and displayed matching shirts. | Pass |
+| Reset search and filters | Apply a search and filters, then click Reset. | Search and filter selections are cleared and all shirts are displayed again. | Search and filters cleared successfully, and all shirts appeared again. | Pass |
+| Add a comment | Submit a comment on another user's shirt post. | The comment is submitted and awaits administrator approval before appearing publicly. | The comment was submitted successfully. | Pass |
+| Approve a comment | Approve a pending comment through the Django admin area. | The approved comment appears publicly on the shirt post. | The comment was approved and appeared publicly. | Pass |
+| Edit a comment | Select Edit Comment, change the text and save. | The updated comment is displayed. | The comment was edited successfully. | Pass |
+| Delete a comment | Select Delete Comment and confirm the deletion. | The comment is deleted and no longer appears on the post. | The comment was deleted successfully. | Pass |
+| View public collections | Log out and open another user's collection from the homepage. | The public collection can be viewed without logging in. | The collection was accessible while logged out. | Pass |
+| Registration password validation | Enter different passwords in the password and confirmation fields. | Registration is rejected and an error message is displayed. | Registration was rejected and an error message appeared. | Pass |
+| Duplicate username validation | Attempt to register using an existing username. | Registration is rejected and an error explains that the username is already taken. | Registration was rejected and the error message appeared. | Pass |
+| Required shirt fields | Leave a required field empty when adding a shirt and submit the form. | The shirt is not saved and a validation message is displayed. | The shirt was not saved and a validation message appeared. | Pass |
+| Mobile responsiveness | View the homepage, navigation bar and shirt cards using Chrome DevTools mobile view. | The layout adjusts to smaller screens without overlapping content or horizontal scrolling. | The website displayed correctly on a mobile-sized screen. | Pass |
+| Tablet responsiveness | View the homepage, navigation bar and shirt cards at a tablet-sized viewport. | The layout adjusts correctly, and buttons and forms remain usable. | The website displayed correctly at tablet size. | Pass |
+| Desktop responsiveness | View the homepage, My Collection and shirt cards at a desktop-sized viewport. | Content is properly spaced, readable and displayed correctly. | The website displayed correctly on a desktop screen. | Pass |
+| Image persistence | Refresh a shirt page containing multiple photographs. | All photographs remain available and display correctly after refreshing. | All photographs remained available after refreshing the page. | Pass |
+| Shirt ownership permissions | Log in as a different user and view another user's collection. | The user can view the shirt but cannot edit or delete it. | The shirt was visible, but editing and deleting options were unavailable. | Pass |
+| Comment ownership permissions | Log in as a different user and view another user's comment. | The user cannot edit or delete another user's comment. | Edit and delete options were unavailable for another user's comment. | Pass |
+| Direct access to another user's edit page | Attempt to open another user's shirt edit URL while logged in as a different user. | Access is denied or the user is redirected. | Access was restricted successfully. | Pass |
