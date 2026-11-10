@@ -50,6 +50,11 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+
+    # Project apps
+    'homepage',
+    'my_collection',
+    'django_countries',
 ]
 
 MIDDLEWARE = [
