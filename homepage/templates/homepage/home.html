@@ -86,137 +86,145 @@
     <!-- Display all shirts uploaded by members -->
     <h2 class="section-heading">Latest Shirts</h2>
 
-   
-{% if shirts %}
+    {% if shirts %}
 
-    <!-- Arrange shirt cards in a responsive grid -->
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <!-- Arrange shirt cards in a responsive grid -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
-        {% for shirt in shirts %}
+            {% for shirt in shirts %}
 
+                <!-- Individual shirt column -->
+                <div class="col">
 
-            <!-- Individual shirt column -->
-            <div class="col">
+                    <!-- Individual shirt card -->
+                    <div class="card shirt-card h-100">
 
-                <!-- Individual shirt card -->
-                <div class="card shirt-card h-100">
+                        <!-- Shirt team name and season -->
+                        <div class="card-header shirt-card-header">
+                            <h3>{{ shirt.team }}</h3>
+                            <span>{{ shirt.season }}</span>
+                        </div>
 
-            <!-- Shirt team name and season -->
-            <div class="card-header shirt-card-header">
-                <h3>{{ shirt.team }}</h3>
-                <span>{{ shirt.season }}</span>
-            </div>
+                        <!-- Main content inside the shirt card -->
+                        <div class="card-body p-3">
 
-            <!-- Main content inside the shirt card -->
-<div class="card-body p-3">
+                            <!-- Display shirt photographs in a carousel -->
+                            {% with images=shirt.images.all %}
+                                {% if images %}
+                                    <div id="shirtCarousel{{ shirt.id }}" class="carousel slide shirt-carousel mb-3">
 
-                                    
-<!-- Display shirt photographs in a carousel -->
-{% with images=shirt.images.all %}
-    {% if images %}
-        <div id="shirtCarousel{{ shirt.id }}" class="carousel slide shirt-carousel mb-3">
+                                        <div class="carousel-inner">
+                                            {% for image in images %}
+                                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                                    <img src="{{ image.image.url }}"
+                                                        class="d-block w-100"
+                                                        alt="Photograph of {{ shirt.team }}">
+                                                </div>
+                                            {% endfor %}
+                                        </div>
 
-            <div class="carousel-inner">
-                {% for image in images %}
-                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                        <img src="{{ image.image.url }}"
-                            class="d-block w-100"
-                            alt="Photograph of {{ shirt.team }}">
-                    </div>
-                {% endfor %}
-            </div>
+                                        {% if images|length > 1 %}
+                                            <button class="carousel-control-prev" type="button"
+                                                data-bs-target="#shirtCarousel{{ shirt.id }}"
+                                                data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Previous</span>
+                                            </button>
 
-            {% if images|length > 1 %}
-                <button class="carousel-control-prev" type="button"
-                    data-bs-target="#shirtCarousel{{ shirt.id }}"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
+                                            <button class="carousel-control-next" type="button"
+                                                data-bs-target="#shirtCarousel{{ shirt.id }}"
+                                                data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Next</span>
+                                            </button>
+                                        {% endif %}
 
-                <button class="carousel-control-next" type="button"
-                    data-bs-target="#shirtCarousel{{ shirt.id }}"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endwith %}
 
-        </div>
-    {% endif %}
-{% endwith %}
+                            <!-- Display the shirt information -->
+                            <div class="shirt-details">
 
-<!-- Display the shirt information -->
-<div class="shirt-details">
+                                <p>
+                                    Added by:
+                                    <a href="{% url 'user_collection' shirt.owner.username %}">
+                                        {{ shirt.owner.username }}
+                                    </a>
+                                </p>
 
-    <p>
-        Added by:
-        <a href="{% url 'user_collection' shirt.owner.username %}">
-            {{ shirt.owner.username }}
-        </a>
-    </p>
+                                <p>Manufacturer: {{ shirt.manufacturer }}</p>
+                                <p>Country: {{ shirt.get_country_display }}</p>
+                                <p>League: {{ shirt.league }}</p>
 
-    <p>Manufacturer: {{ shirt.manufacturer }}</p>
-    <p>Country: {{ shirt.get_country_display }}</p>
-    <p>League: {{ shirt.league }}</p>
+                            </div>
 
-</div>
+                            <!-- Show comments left on this shirt -->
+                            <h4 class="comments-heading">Comments</h4>
 
+                            {% for comment in shirt.comments.all %}
+                                {% if comment.approved or user == comment.owner or user.is_staff %}
+                                    <div>
+                                        <p>{{ comment.content }}</p>
 
-                        <!-- Show comments left on this shirt -->
-                        <h4 class="comments-heading">Comments</h4>
+                                        {% if not comment.approved %}
+                                            <p>Awaiting admin approval</p>
+                                        {% endif %}
 
-                        {% for comment in shirt.comments.all %}
-                            {% if comment.approved or user == comment.owner or user.is_staff %}
-                                <div>
-                                    <p>{{ comment.content }}</p>
+                                        <small>
+                                            Posted by {{ comment.owner.username }}
+                                            on {{ comment.date_added|date:"d M Y" }}
+                                        </small>
 
-                                    {% if not comment.approved %}
-                                        <p>Awaiting admin approval</p>
+                                        <!-- Only let the comment owner edit or delete their comment -->
+                                        {% if user.is_authenticated and user == comment.owner %}
+                                        <div class="mt-2 d-flex gap-2">
+                                            <a href="{% url 'edit_comment' comment.id %}" class="btn btn-primary btn-sm">
+                                                Edit
+                                            </a>
+                                            <a href="{% url 'delete_comment' comment.id %}" class="btn btn-danger btn-sm">
+                                                Delete
+                                            </a>
+                                        </div>
                                     {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% empty %}
+                                <p>No comments yet.</p>
+                            {% endfor %}
 
-                                    <small>
-                                        Posted by {{ comment.owner.username }}
-                                        on {{ comment.date_added|date:"d M Y" }}
-                                    </small>
+                            <!-- Let logged-in users comment on other shirts -->
+                            {% if user.is_authenticated and user != shirt.owner %}
+                                <form method="POST" action="{% url 'add_comment' shirt.id %}?next=home" class="mt-3">
+                                    {% csrf_token %}
 
-                                    <!-- Only let the comment owner edit or delete their comment -->
-                                    {% if user.is_authenticated and user == comment.owner %}
-                                        <a href="{% url 'edit_comment' comment.id %}">Edit</a>
-                                        <a href="{% url 'delete_comment' comment.id %}">Delete</a>
-                                    {% endif %}
-                                </div>
+                                    <div class="mb-2">
+                                        <textarea name="content" rows="3" maxlength="500"
+                                            class="form-control"
+                                            placeholder="Write a comment..." required></textarea>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary">
+                                        Post Comment
+                                    </button>
+                                </form>
+                            {% elif not user.is_authenticated %}
+                                <p class="mt-3">
+                                    <a href="{% url 'login' %}">Log in</a>
+                                    to leave a comment.
+                                </p>
                             {% endif %}
-                        {% empty %}
-                            <p>No comments yet.</p>
-                        {% endfor %}
 
-                        <!-- Let logged-in users comment on other shirts -->
-                        {% if user.is_authenticated and user != shirt.owner %}
-                            <form method="POST" action="{% url 'add_comment' shirt.id %}?next=home">
-                                {% csrf_token %}
-                                <textarea name="content" rows="3" maxlength="500"
-                                    placeholder="Write a comment..." required></textarea>
-                                <button type="submit">Post Comment</button>
-                            </form>
-                        {% elif not user.is_authenticated %}
-                            <p>
-                                <a href="{% url 'login' %}">Log in</a>
-                                to leave a comment.
-                            </p>
-                        {% endif %}
-
+                        </div>
                     </div>
                 </div>
-            </div>
 
-        {% endfor %}
+            {% endfor %}
 
-    </div>
+        </div>
 
-{% else %}
-    <p>No shirts match your search.</p>
-{% endif %}
-
+    {% else %}
+        <p>No shirts match your search.</p>
+    {% endif %}
 
 {% endblock %}

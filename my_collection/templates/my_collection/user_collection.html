@@ -1,86 +1,159 @@
+
 {% extends 'base.html' %}
 
 {% block content %}
 
     <!-- Show whose collection is being viewed -->
-    <h1>{{ collection_owner.username }}'s Collection</h1>
+    <div class="welcome-section">
+        <h1>{{ collection_owner.username }}'s Collection</h1>
+        <p>Explore their football shirt collection.</p>
+    </div>
 
     {% if shirts %}
-        {% for shirt in shirts %}
-            <div>
-                <h2>{{ shirt.team }}</h2>
 
-                <!-- Only let the owner manage their own shirts -->
-                {% if user.is_authenticated and user == shirt.owner %}
-                    <a href="{% url 'edit_shirt' shirt.id %}">Edit Shirt</a>
-                    <a href="{% url 'delete_shirt' shirt.id %}">Delete Shirt</a>
-                {% endif %}
+        <!-- Arrange shirt cards in a responsive grid -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
-                <p>Season: {{ shirt.season }}</p>
-                <p>Type: {{ shirt.get_shirt_type_display }}</p>
-                <p>Manufacturer: {{ shirt.manufacturer }}</p>
-                <p>Country: {{ shirt.get_country_display }}</p>
-                <p>League: {{ shirt.league }}</p>
-                <p>Issue: {{ shirt.get_issue_display }}</p>
-                <p>Condition: {{ shirt.get_condition_display }}</p>
-                <p>Size: {{ shirt.get_size_display }}</p>
+            {% for shirt in shirts %}
 
-                <!-- Only show player details when provided -->
-                {% if shirt.player_name %}
-                    <p>Player: {{ shirt.player_name }}</p>
-                {% endif %}
+                <!-- Individual shirt column -->
+                <div class="col">
 
-                {% if shirt.shirt_number %}
-                    <p>Shirt number: {{ shirt.shirt_number }}</p>
-                {% endif %}
+                    <!-- Individual shirt card -->
+                    <div class="card shirt-card h-100">
 
-                <p>{{ shirt.description }}</p>
-
-                <!-- Display comments left on this shirt -->
-                <h3>Comments</h3>
-
-                {% for comment in shirt.comments.all %}
-                    {% if comment.approved or user == comment.owner or user.is_staff %}
-                        <div>
-                            <p>{{ comment.content }}</p>
-
-                            {% if not comment.approved %}
-                                <p>Awaiting admin approval</p>
-                            {% endif %}
-
-                            <small>
-                                Posted by {{ comment.owner.username }}
-                                on {{ comment.date_added|date:"d M Y" }}
-                            </small>
-
-                            <!-- Only let the comment owner edit or delete their comment -->
-                            {% if user.is_authenticated and user == comment.owner %}
-                                <a href="{% url 'edit_comment' comment.id %}">Edit</a>
-                                <a href="{% url 'delete_comment' comment.id %}">Delete</a>
-                            {% endif %}
+                        <!-- Shirt team name and season -->
+                        <div class="card-header shirt-card-header">
+                            <h3>{{ shirt.team }}</h3>
+                            <span>{{ shirt.season }}</span>
                         </div>
-                    {% endif %}
-                {% empty %}
-                    <p>No comments yet.</p>
-                {% endfor %}
 
-                <!-- Allow logged-in users to add a comment -->
-                {% if user.is_authenticated %}
-                    <form method="POST" action="{% url 'add_comment' shirt.id %}">
-                        {% csrf_token %}
-                        <textarea name="content" rows="3" maxlength="500" placeholder="Write a comment..." required></textarea>
-                        <button type="submit">Post Comment</button>
-                    </form>
-                {% else %}
-                    <p><a href="{% url 'login' %}">Log in</a> to leave a comment.</p>
-                {% endif %}
+                        <!-- Main content inside the shirt card -->
+                        <div class="card-body p-3">
 
-                <!-- Display all photographs of the shirt -->
-                {% for image in shirt.images.all %}
-                    <img src="{{ image.image.url }}" alt="Photograph of {{ shirt.team }}" width="200">
-                {% endfor %}
-            </div>
-        {% endfor %}
+                            <!-- Display shirt photographs in a carousel -->
+                            {% with images=shirt.images.all %}
+                                {% if images %}
+                                    <div id="shirtCarousel{{ shirt.id }}" class="carousel slide shirt-carousel mb-3">
+
+                                        <div class="carousel-inner">
+                                            {% for image in images %}
+                                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                                    <img src="{{ image.image.url }}"
+                                                        class="d-block w-100"
+                                                        alt="Photograph of {{ shirt.team }}">
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+
+                                        {% if images|length > 1 %}
+                                            <button class="carousel-control-prev" type="button"
+                                                data-bs-target="#shirtCarousel{{ shirt.id }}"
+                                                data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Previous</span>
+                                            </button>
+
+                                            <button class="carousel-control-next" type="button"
+                                                data-bs-target="#shirtCarousel{{ shirt.id }}"
+                                                data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Next</span>
+                                            </button>
+                                        {% endif %}
+
+                                    </div>
+                                {% endif %}
+                            {% endwith %}
+
+                            <!-- Display the shirt information -->
+                            <div class="shirt-details">
+                                <p>Type: {{ shirt.get_shirt_type_display }}</p>
+                                <p>Manufacturer: {{ shirt.manufacturer }}</p>
+                                <p>Country: {{ shirt.get_country_display }}</p>
+                                <p>League: {{ shirt.league }}</p>
+                                <p>Issue: {{ shirt.get_issue_display }}</p>
+                                <p>Condition: {{ shirt.get_condition_display }}</p>
+                                <p>Size: {{ shirt.get_size_display }}</p>
+
+                                <!-- Show player details when provided -->
+                                {% if shirt.player_name %}
+                                    <p>Player: {{ shirt.player_name }}</p>
+                                {% endif %}
+
+                                {% if shirt.shirt_number %}
+                                    <p>Shirt number: {{ shirt.shirt_number }}</p>
+                                {% endif %}
+                            </div>
+
+                            <!-- Display the shirt description -->
+                            <p class="mt-3">{{ shirt.description }}</p>
+
+                            <!-- Only let the owner manage their own shirts -->
+                            {% if user.is_authenticated and user == shirt.owner %}
+                                <div class="mt-3 d-flex gap-2">
+                                    <a href="{% url 'edit_shirt' shirt.id %}" class="btn btn-primary">
+                                        Edit Shirt
+                                    </a>
+                                    <a href="{% url 'delete_shirt' shirt.id %}" class="btn btn-danger">
+                                        Delete Shirt
+                                    </a>
+                                </div>
+                            {% endif %}
+
+                            <!-- Show comments left on this shirt -->
+                            <h4 class="comments-heading">Comments</h4>
+
+                            {% for comment in shirt.comments.all %}
+                                {% if comment.approved or user == comment.owner or user.is_staff %}
+                                    <div class="mb-3">
+                                        <p>{{ comment.content }}</p>
+
+                                        {% if not comment.approved %}
+                                            <p>Awaiting admin approval</p>
+                                        {% endif %}
+
+                                        <small>
+                                            Posted by {{ comment.owner.username }}
+                                            on {{ comment.date_added|date:"d M Y" }}
+                                        </small>
+
+                                        <!-- Only let the comment owner edit or delete their comment -->
+                                        {% if user.is_authenticated and user == comment.owner %}
+                                            <div class="mt-2 d-flex gap-2">
+                                                <a href="{% url 'edit_comment' comment.id %}" class="btn btn-primary btn-sm">Edit</a>
+                                                <a href="{% url 'delete_comment' comment.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% empty %}
+                                <p>No comments yet.</p>
+                            {% endfor %}
+
+                            <!-- Allow logged-in users to add a comment -->
+                            {% if user.is_authenticated %}
+                                <form method="POST" action="{% url 'add_comment' shirt.id %}">
+                                    {% csrf_token %}
+                                    <textarea name="content" class="form-control mb-2" rows="3"
+                                        maxlength="500" placeholder="Write a comment..." required></textarea>
+                                    <button type="submit" class="btn btn-primary">Post Comment</button>
+                                </form>
+                            {% else %}
+                                <p>
+                                    <a href="{% url 'login' %}">Log in</a>
+                                    to leave a comment.
+                                </p>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+
+        </div>
+
     {% else %}
         <p>This user hasn't added any shirts yet.</p>
     {% endif %}

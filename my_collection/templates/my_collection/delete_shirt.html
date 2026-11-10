@@ -1,19 +1,35 @@
+
 {% extends 'base.html' %}
 
 {% block content %}
 
-    <h1>Delete Shirt</h1>
+    <!-- Display the delete confirmation inside a card -->
+    <div class="card shirt-card mx-auto mt-4" style="max-width: 600px;">
 
-    <!-- Ask the user to confirm before deleting the shirt -->
-    <p>Are you sure you want to delete your {{ shirt.team }} shirt?</p>
+        <!-- Page heading -->
+        <div class="card-header shirt-card-header">
+            <h3>Delete Shirt</h3>
+        </div>
 
-    <!-- Submit the deletion request -->
-    <form method="POST">
-        {% csrf_token %}
-        <button type="submit">Yes, Delete Shirt</button>
-    </form>
+        <div class="card-body p-4">
 
-    <!-- Give the user a way to cancel -->
-    <a href="{% url 'my_collection' %}">Cancel</a>
+            <!-- Ask the user to confirm before deleting the shirt -->
+            <p>Are you sure you want to delete your {{ shirt.team }} shirt?</p>
+
+            <!-- Submit the deletion request -->
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">
+                    Yes, Delete Shirt
+                </button>
+            </form>
+
+            <!-- Give the user a way to cancel -->
+            <a href="{% url 'my_collection' %}" class="btn btn-primary mt-2">
+                Cancel
+            </a>
+
+        </div>
+    </div>
 
 {% endblock %}
