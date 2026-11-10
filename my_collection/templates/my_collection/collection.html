@@ -10,77 +10,94 @@
     </div>
 
     <!-- Search and filter shirts -->
-    <button class="btn search-button mb-3" type="button"
+    <button class="btn btn-primary mb-3" type="button"
         data-bs-toggle="collapse" data-bs-target="#searchFilters"
         aria-expanded="false" aria-controls="searchFilters">
         Search & Filter Shirts
     </button>
 
     <!-- Collapsible search filters -->
-    <div class="collapse" id="searchFilters">
+    <div class="collapse mb-4" id="searchFilters">
 
-        <form method="GET">
-            <p class="mb-3">
-                <label for="team">Team:</label>
-                <input type="text" class="form-control" name="team" id="team"
-                    value="{{ request.GET.team|default:'' }}"
-                    placeholder="Search by team">
-            </p>
+        <!-- Display filters inside a card -->
+        <div class="card shirt-card">
+            <div class="card-header shirt-card-header">
+                <h3>Search Shirts</h3>
+            </div>
 
-            <p class="mb-3">
-                <label for="season">Season:</label>
-                <input type="text" class="form-control" name="season" id="season"
-                    value="{{ request.GET.season|default:'' }}"
-                    placeholder="e.g. 2024/25">
-            </p>
+            <div class="card-body p-4">
 
-            <p class="mb-3">
-                <label for="manufacturer">Manufacturer:</label>
-                <select name="manufacturer" class="form-select" id="manufacturer">
-                    <option value="">All manufacturers</option>
-                    {% for value, label in manufacturer_choices %}
-                        <option value="{{ value }}" {% if request.GET.manufacturer == value %}selected{% endif %}>
-                            {{ label }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </p>
+                <form method="GET">
 
-            <p class="mb-3">
-                <label for="country">Country:</label>
-                <select name="country" class="form-select" id="country">
-                    <option value="">All countries</option>
-                    {% for value, label in country_choices %}
-                        <option value="{{ value }}" {% if request.GET.country == value %}selected{% endif %}>
-                            {{ label }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </p>
+                    <div class="mb-3">
+                        <label for="team" class="form-label">Team:</label>
+                        <input type="text" class="form-control" name="team" id="team"
+                            value="{{ request.GET.team|default:'' }}"
+                            placeholder="Search by team">
+                    </div>
 
-            <p class="mb-3">
-                <label for="league">League:</label>
-                <select name="league" class="form-select" id="league">
-                    <option value="">All leagues</option>
-                    {% for value, label in league_choices %}
-                        <option value="{{ value }}" {% if request.GET.league == value %}selected{% endif %}>
-                            {{ label }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </p>
+                    <div class="mb-3">
+                        <label for="season" class="form-label">Season:</label>
+                        <input type="text" class="form-control" name="season" id="season"
+                            value="{{ request.GET.season|default:'' }}"
+                            placeholder="e.g. 2024/25">
+                    </div>
 
-            <p class="mb-3">
-                <label for="player">Player:</label>
-                <input type="text" class="form-control" name="player" id="player"
-                    value="{{ request.GET.player|default:'' }}"
-                    placeholder="Search by player">
-            </p>
+                    <div class="mb-3">
+                        <label for="manufacturer" class="form-label">Manufacturer:</label>
+                        <select name="manufacturer" class="form-select" id="manufacturer">
+                            <option value="">All manufacturers</option>
+                            {% for value, label in manufacturer_choices %}
+                                <option value="{{ value }}" {% if request.GET.manufacturer == value %}selected{% endif %}>
+                                    {{ label }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
-            <button type="submit">Search</button>
-            <a href="{% url 'my_collection' %}">Clear Filters</a>
-        </form>
+                    <div class="mb-3">
+                        <label for="country" class="form-label">Country:</label>
+                        <select name="country" class="form-select" id="country">
+                            <option value="">All countries</option>
+                            {% for value, label in country_choices %}
+                                <option value="{{ value }}" {% if request.GET.country == value %}selected{% endif %}>
+                                    {{ label }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
+                    <div class="mb-3">
+                        <label for="league" class="form-label">League:</label>
+                        <select name="league" class="form-select" id="league">
+                            <option value="">All leagues</option>
+                            {% for value, label in league_choices %}
+                                <option value="{{ value }}" {% if request.GET.league == value %}selected{% endif %}>
+                                    {{ label }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="player" class="form-label">Player:</label>
+                        <input type="text" class="form-control" name="player" id="player"
+                            value="{{ request.GET.player|default:'' }}"
+                            placeholder="Search by player">
+                    </div>
+
+                    <!-- Search or clear the selected filters -->
+                    <button type="submit" class="btn btn-primary">
+                        Search
+                    </button>
+
+                    <a href="{% url 'my_collection' %}" class="btn btn-danger">
+                        Clear Filters
+                    </a>
+
+                </form>
+            </div>
+        </div>
     </div>
 
     <!-- Display shirts in the user's collection -->

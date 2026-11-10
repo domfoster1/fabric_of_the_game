@@ -1,16 +1,41 @@
+
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Add a Shirt</h1>
 
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-<!-- Allow users to select multiple shirt photographs -->
-        {{ form.as_p }}
+    <!-- Display the add shirt form inside a card -->
+    <div class="card shirt-card mx-auto mt-4" style="max-width: 800px;">
 
-        <label for="images">Upload shirt photographs:</label>
-        <input type="file" name="images" id="images" multiple>
+        <!-- Page heading -->
+        <div class="card-header shirt-card-header">
+            <h3>Add a Shirt</h3>
+        </div>
 
-        <button type="submit">Add Shirt</button>
-    </form>
+        <div class="card-body p-4">
+
+            <!-- Allow users to add a new shirt -->
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- Display the shirt information fields -->
+                {{ form.as_p }}
+
+                <!-- Allow users to select multiple shirt photographs -->
+                <div class="mb-3">
+                    <label for="images" class="form-label">
+                        Upload shirt photographs:
+                    </label>
+                    <input type="file" name="images" id="images"
+                        class="form-control" multiple>
+                </div>
+
+                <!-- Submit the new shirt -->
+                <button type="submit" class="btn btn-primary">
+                    Add Shirt
+                </button>
+            </form>
+
+        </div>
+    </div>
+
 {% endblock %}

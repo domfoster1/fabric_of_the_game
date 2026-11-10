@@ -125,16 +125,51 @@ def register(request):
 
     return render(request, 'registration/register.html', {'form': form})
 
+
 def user_collection(request, username):
-    """Display a user's public shirt collection."""
+    """Display and filter a user's public shirt collection."""
 
     collection_owner = get_object_or_404(User, username=username)
-    shirts = Shirt.objects.filter(owner=collection_owner)
+
+    shirts = Shirt.objects.filter(
+        owner=collection_owner
+    ).order_by('-date_added')
+
+    # Get the search and filter values
+    team = request.GET.get('team')
+    season = request.GET.get('season')
+    manufacturer = request.GET.get('manufacturer')
+    country = request.GET.get('country')
+    league = request.GET.get('league')
+    player = request.GET.get('player')
+
+    # Filter this user's shirts using the values entered
+    if team:
+        shirts = shirts.filter(team__icontains=team)
+
+    if season:
+        shirts = shirts.filter(season__icontains=season)
+
+    if manufacturer:
+        shirts = shirts.filter(manufacturer=manufacturer)
+
+    if country:
+        shirts = shirts.filter(country=country)
+
+    if league:
+        shirts = shirts.filter(league=league)
+
+    if player:
+        shirts = shirts.filter(player_name__icontains=player)
 
     return render(request, 'my_collection/user_collection.html', {
         'collection_owner': collection_owner,
-        'shirts': shirts
+        'shirts': shirts,
+        'manufacturer_choices': Shirt._meta.get_field('manufacturer').choices,
+        'country_choices': Shirt._meta.get_field('country').choices,
+        'league_choices': Shirt._meta.get_field('league').choices,
     })
+
 
 @login_required
 def add_comment(request, shirt_id):

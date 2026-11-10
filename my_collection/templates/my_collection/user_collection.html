@@ -9,6 +9,98 @@
         <p>Explore their football shirt collection.</p>
     </div>
 
+    <!-- Search and filter shirts in this collection -->
+    <button class="btn btn-primary mb-3" type="button"
+        data-bs-toggle="collapse" data-bs-target="#searchFilters"
+        aria-expanded="false" aria-controls="searchFilters">
+        Search & Filter Shirts
+    </button>
+
+    <!-- Collapsible search filters -->
+    <div class="collapse mb-4" id="searchFilters">
+
+        <!-- Display filters inside a card -->
+        <div class="card shirt-card">
+            <div class="card-header shirt-card-header">
+                <h3>Search Shirts</h3>
+            </div>
+
+            <div class="card-body p-4">
+
+                <form method="GET">
+
+                    <div class="mb-3">
+                        <label for="team" class="form-label">Team:</label>
+                        <input type="text" class="form-control" name="team" id="team"
+                            value="{{ request.GET.team|default:'' }}"
+                            placeholder="Search by team">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="season" class="form-label">Season:</label>
+                        <input type="text" class="form-control" name="season" id="season"
+                            value="{{ request.GET.season|default:'' }}"
+                            placeholder="e.g. 2024/25">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="manufacturer" class="form-label">Manufacturer:</label>
+                        <select name="manufacturer" class="form-select" id="manufacturer">
+                            <option value="">All manufacturers</option>
+                            {% for value, label in manufacturer_choices %}
+                                <option value="{{ value }}" {% if request.GET.manufacturer == value %}selected{% endif %}>
+                                    {{ label }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="country" class="form-label">Country:</label>
+                        <select name="country" class="form-select" id="country">
+                            <option value="">All countries</option>
+                            {% for value, label in country_choices %}
+                                <option value="{{ value }}" {% if request.GET.country == value %}selected{% endif %}>
+                                    {{ label }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="league" class="form-label">League:</label>
+                        <select name="league" class="form-select" id="league">
+                            <option value="">All leagues</option>
+                            {% for value, label in league_choices %}
+                                <option value="{{ value }}" {% if request.GET.league == value %}selected{% endif %}>
+                                    {{ label }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="player" class="form-label">Player:</label>
+                        <input type="text" class="form-control" name="player" id="player"
+                            value="{{ request.GET.player|default:'' }}"
+                            placeholder="Search by player">
+                    </div>
+
+                    <!-- Search or clear the selected filters -->
+                    <button type="submit" class="btn btn-primary">
+                        Search
+                    </button>
+
+                    <a href="{% url 'user_collection' collection_owner.username %}" class="btn btn-danger">
+                        Clear Filters
+                    </a>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Display shirts in this user's collection -->
     {% if shirts %}
 
         <!-- Arrange shirt cards in a responsive grid -->
@@ -121,8 +213,12 @@
                                         <!-- Only let the comment owner edit or delete their comment -->
                                         {% if user.is_authenticated and user == comment.owner %}
                                             <div class="mt-2 d-flex gap-2">
-                                                <a href="{% url 'edit_comment' comment.id %}" class="btn btn-primary btn-sm">Edit</a>
-                                                <a href="{% url 'delete_comment' comment.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                                <a href="{% url 'edit_comment' comment.id %}" class="btn btn-primary btn-sm">
+                                                    Edit
+                                                </a>
+                                                <a href="{% url 'delete_comment' comment.id %}" class="btn btn-danger btn-sm">
+                                                    Delete
+                                                </a>
                                             </div>
                                         {% endif %}
                                     </div>
@@ -137,7 +233,9 @@
                                     {% csrf_token %}
                                     <textarea name="content" class="form-control mb-2" rows="3"
                                         maxlength="500" placeholder="Write a comment..." required></textarea>
-                                    <button type="submit" class="btn btn-primary">Post Comment</button>
+                                    <button type="submit" class="btn btn-primary">
+                                        Post Comment
+                                    </button>
                                 </form>
                             {% else %}
                                 <p>
@@ -155,7 +253,7 @@
         </div>
 
     {% else %}
-        <p>This user hasn't added any shirts yet.</p>
+        <p>No shirts match your search.</p>
     {% endif %}
 
 {% endblock %}

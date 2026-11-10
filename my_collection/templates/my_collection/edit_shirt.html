@@ -1,16 +1,32 @@
+
 {% extends 'base.html' %}
 
 {% block content %}
 
-    <h1>Edit Shirt</h1>
+    <!-- Display the edit shirt form inside a card -->
+    <div class="card shirt-card mx-auto mt-4" style="max-width: 800px;">
 
-    <!-- Form for updating the shirt details -->
-    <form method="POST">
-        {% csrf_token %}
+        <!-- Page heading -->
+        <div class="card-header shirt-card-header">
+            <h3>Edit Shirt</h3>
+        </div>
 
-        {{ form.as_p }}
+        <div class="card-body p-4">
 
-        <button type="submit">Save Changes</button>
-    </form>
+            <!-- Form for updating the shirt details -->
+            <form method="POST">
+                {% csrf_token %}
+
+                <!-- Display the shirt information fields -->
+                {{ form.as_p }}
+
+                <!-- Save the updated shirt details -->
+                <button type="submit" class="btn btn-primary">
+                    Save Changes
+                </button>
+            </form>
+
+        </div>
+    </div>
 
 {% endblock %}

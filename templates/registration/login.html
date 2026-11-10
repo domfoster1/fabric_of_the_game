@@ -1,13 +1,32 @@
+
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Login</h1>
 
-    <form method="POST">
-        {% csrf_token %}
+    <!-- Display the login form inside a card -->
+    <div class="card shirt-card mx-auto mt-4" style="max-width: 600px;">
 
-        {{ form.as_p }}
+        <!-- Page heading -->
+        <div class="card-header shirt-card-header">
+            <h3>Login</h3>
+        </div>
 
-        <button type="submit">Login</button>
-    </form>
+        <div class="card-body p-4">
+
+            <!-- Allow existing users to log in -->
+            <form method="POST">
+                {% csrf_token %}
+
+                <!-- Display the login fields -->
+                {{ form.as_p }}
+
+                <!-- Submit the login form -->
+                <button type="submit" class="btn btn-primary">
+                    Login
+                </button>
+            </form>
+
+        </div>
+    </div>
+
 {% endblock %}

@@ -1,13 +1,76 @@
+
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Create an Account</h1>
 
-    <form method="POST">
-        {% csrf_token %}
+    <!-- Display the registration form inside a card -->
+    <div class="card shirt-card mx-auto mt-4" style="max-width: 600px;">
 
-        {{ form.as_p }}
+        <!-- Page heading -->
+        <div class="card-header shirt-card-header">
+            <h3>Create an Account</h3>
+        </div>
 
-        <button type="submit">Register</button>
-    </form>
+        <div class="card-body p-4">
+
+            <!-- Allow new users to create an account -->
+            <form method="POST">
+                {% csrf_token %}
+
+                <!-- Display any general form errors -->
+                {{ form.non_field_errors }}
+
+                <!-- Username field -->
+                <div class="mb-3">
+                    {{ form.username.label_tag }}
+                    {{ form.username }}
+
+                    <small class="form-text text-muted">
+                        Letters, digits and @/./+/-/_ only.
+                    </small>
+
+                    {{ form.username.errors }}
+                </div>
+
+                <!-- Email field -->
+                <div class="mb-3">
+                    {{ form.email.label_tag }}
+                    {{ form.email }}
+                    {{ form.email.errors }}
+                </div>
+
+                <!-- Password field -->
+                <div class="mb-3">
+                    {{ form.password1.label_tag }}
+                    {{ form.password1 }}
+
+                    <div class="form-text text-muted">
+                        {{ form.password1.help_text|safe }}
+                    </div>
+
+                    {{ form.password1.errors }}
+                </div>
+
+                <!-- Password confirmation field -->
+                <div class="mb-3">
+                    {{ form.password2.label_tag }}
+                    {{ form.password2 }}
+
+                    <small class="form-text text-muted">
+                        Enter the same password again to confirm it.
+                    </small>
+
+                    {{ form.password2.errors }}
+                </div>
+
+                <!-- Submit the registration form -->
+                <button type="submit" class="btn btn-primary">
+                    Register
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+
 {% endblock %}
