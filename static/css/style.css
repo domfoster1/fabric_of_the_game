@@ -100,12 +100,13 @@ img {
 }
 
 /* Individual shirt cards */
-
 .shirt-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: var(--white);
+    border: 2px solid var(--burgundy);
+    border-radius: 10px;
+    background-color: var(--navy);
+    color: var(--white);
     padding: 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
 
@@ -137,6 +138,7 @@ img {
 /* Shirt information below the photos */
 .shirt-details {
     background-color: var(--cream);
+    color: var(--navy);
     border-left: 3px solid var(--burgundy);
     padding: 12px;
     margin-top: 15px;
@@ -207,15 +209,28 @@ img {
     margin-bottom: 0;
 }
 
-/* Edit shirt button */
-.btn-primary {
-    background-color: #17283A;
-    border-color: #17283A;
-    color: #FFFFFF;
+/* Burgundy buttons for posting comments */
+.btn-comment {
+    background-color: var(--burgundy);
+    border-color: var(--burgundy);
+    color: var(--white);
 }
 
-.btn-primary:hover {
-    background-color: #17283A;
-    border-color: #17283A;
-    color: #FFFFFF;
+.btn-comment:hover {
+    background-color: #582230;
+    border-color: #582230;
+    color: var(--white);
+}
+
+/* Cream buttons for editing */
+.btn-edit {
+    background-color: var(--cream);
+    border-color: var(--cream);
+    color: var(--navy);
+}
+
+.btn-edit:hover {
+    background-color: #e5dfd2;
+    border-color: #e5dfd2;
+    color: var(--navy);
 }

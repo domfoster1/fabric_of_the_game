@@ -10,7 +10,7 @@
     </div>
 
     <!-- Search and filter shirts -->
-    <button class="btn btn-primary mb-3" type="button"
+    <button class="btn btn-comment mb-3" type="button"
         data-bs-toggle="collapse" data-bs-target="#searchFilters"
         aria-expanded="false" aria-controls="searchFilters">
         Search & Filter Shirts
@@ -189,7 +189,7 @@
                             {% if user.is_authenticated and user == shirt.owner %}
                                 <!-- Buttons for managing the shirt -->
                                 <div class="mt-3 d-flex gap-2">
-                                    <a href="{% url 'edit_shirt' shirt.id %}" class="btn btn-primary">
+                                    <a href="{% url 'edit_shirt' shirt.id %}" class="btn btn-edit">
                                         Edit Shirt
                                     </a>
 
