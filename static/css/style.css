@@ -206,3 +206,16 @@ img {
 .shirt-details p:last-child {
     margin-bottom: 0;
 }
+
+/* Edit shirt button */
+.btn-primary {
+    background-color: #17283A;
+    border-color: #17283A;
+    color: #FFFFFF;
+}
+
+.btn-primary:hover {
+    background-color: #17283A;
+    border-color: #17283A;
+    color: #FFFFFF;
+}
