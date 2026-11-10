@@ -51,17 +51,17 @@
                     {{ form.password1.errors }}
                 </div>
 
-                <!-- Password confirmation field -->
-                <div class="mb-3">
-                    {{ form.password2.label_tag }}
-                    {{ form.password2 }}
+                <!-- Password field -->
+                    <div class="mb-3">
+                        {{ form.password1.label_tag }}
+                        {{ form.password1 }}
 
-                    <small class="form-text text-muted">
-                        Enter the same password again to confirm it.
-                    </small>
+                        <small class="form-text text-muted">
+                            Use at least 8 characters. Avoid common or entirely numeric passwords.
+                        </small>
 
-                    {{ form.password2.errors }}
-                </div>
+                        {{ form.password1.errors }}
+                    </div>
 
                 <!-- Submit the registration form -->
                 <button type="submit" class="btn btn-comment">
