@@ -192,6 +192,28 @@ The website is deployed using Heroku and connected to the project's GitHub repos
 
 The application uses environment variables to store sensitive settings, including the Django secret key and Cloudinary API credentials. These are configured through Heroku Config Vars and are not stored in the GitHub repository.
 
+
+### Deployment Process
+
+The following steps were used to deploy Fabric of the Game to Heroku:
+
+1. The project was stored in a GitHub repository and the main branch was kept up to date with the latest changes.
+2. A Heroku application was created and connected to the GitHub repository.
+3. The required environment variables were added through Heroku Config Vars, including the Django secret key and Cloudinary credentials.
+4. The application dependencies were recorded in `requirements.txt` so Heroku could install the required packages.
+5. A `Procfile` was added to tell Heroku how to start the Django application using Gunicorn.
+6. WhiteNoise was configured to serve static files in the deployed application.
+7. The main branch was selected in the Heroku Deploy tab and deployed using Manual Deploy.
+8. The live website was opened and tested to check that the application, user accounts, shirt listings and uploaded photographs worked correctly.
+
+
+### Production Security
+
+The Django application is configured with `DEBUG=False` in production to prevent detailed error information from being displayed to website visitors.
+
+Sensitive information, including the Django secret key and Cloudinary API credentials, is stored in environment variables rather than directly in the project code. The local `.env` file is excluded from Git using `.gitignore`, helping to prevent these credentials from being uploaded to GitHub.
+
+
 ### Database
 
 The project currently uses SQLite for its database. The `db.sqlite3` file is included in the repository to support the current deployment setup.
@@ -285,11 +307,11 @@ A further warning was fixed by changing the Create an Account heading from `<h3>
 
 **Initial validation – five errors:**
 
-![Registration page initial HTML validation](docs/register-htmlcheck-register1.jpg)
+![Registration page initial HTML validation](docs/htmlcheck-register1.jpg)
 
 **Second validation – one warning remaining:**
 
-![Registration page second HTML validation](docs/register-htmlcheck-register2.jpg)
+![Registration page second HTML validation](docs/htmlcheck-register2.jpg)
 
 **Final validation – passed:**
 
