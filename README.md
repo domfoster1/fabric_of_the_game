@@ -311,7 +311,7 @@ A further warning was fixed by changing the Create an Account heading from `<h3>
 
 **Second validation – one warning remaining:**
 
-![Registration page second HTML validation](docs/htmlcheck-register2.jpg)
+![Registration page second HTML validation](docs/htmlcheck-register2.png)
 
 **Final validation – passed:**
 
