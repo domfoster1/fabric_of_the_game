@@ -160,3 +160,135 @@ The Python code was checked using Flake8 to identify and fix formatting issues, 
 The project was also checked using Django's system check command. Both checks completed successfully with no remaining issues.
 ![Flake8 check results](docs/flake8%20testing.jpg)
 
+
+## HTML Validation
+
+The website pages were checked using the W3C Markup Validation Service.
+
+### Homepage
+
+The initial validation found one heading structure error. The Search Shirts heading used an `<h3>` directly after an `<h1>`, skipping the `<h2>` level.
+
+This was fixed by changing the Search Shirts heading to an `<h2>`.
+
+**Initial validation – one error:**
+
+![Homepage HTML validation error](docs/homepage-htmlcheck.jpg)
+
+**Final validation – passed:**
+
+![Homepage HTML validation passed](docs/homepage-htmlcheck2.jpg)
+
+The homepage passed validation with no errors or warnings.
+
+### Registration Page
+
+The initial validation found five errors caused by unwanted Markdown code-fence text appearing before the DOCTYPE. This text was removed.
+
+A further warning was fixed by changing the Create an Account heading from `<h3>` to `<h1 class="h3">`. This provided the correct heading structure while keeping the same visual size.
+
+**Initial validation – five errors:**
+
+![Registration page initial HTML validation](docs/register-htmlcheck.jpg)
+
+**Second validation – one warning remaining:**
+
+![Registration page second HTML validation](docs/register-htmlcheck2.jpg)
+
+**Final validation – passed:**
+
+![Registration page final HTML validation](docs/htmlcheck-register3.png)
+
+The registration page passed validation with no errors or warnings.
+
+### Login Page
+
+The initial validation found one warning because the page did not contain an `<h1>` heading. The Login heading used an `<h3>`.
+
+This was fixed by changing the heading to `<h1 class="h3">`, providing the correct heading structure while keeping the same visual size.
+
+**Initial validation – one warning:**
+
+![Login page initial HTML validation](docs/htmlcheck-login1.jpg)
+
+**Final validation – passed:**
+
+![Login page final HTML validation](docs/htmlcheck-login2.png)
+
+The login page passed validation with no errors or warnings.
+
+### My Collection Page
+
+The My Collection page was checked using the W3C Markup Validation Service.
+
+**Final validation – passed:**
+
+![My Collection page HTML validation passed](docs/htmlcheck-mycollection.jpg)
+
+The My Collection page passed validation with no errors or warnings.
+
+### Add a Shirt Page
+
+The Add a Shirt page was checked using the W3C Markup Validation Service.
+
+**Final validation – passed:**
+
+![Add a Shirt page HTML validation passed](docs/htmlcheck-addshirt.jpg)
+
+The Add a Shirt page passed validation with no errors or warnings.
+
+### Edit Shirt Page
+
+The Edit Shirt page was checked using the W3C Markup Validation Service.
+
+**Final validation – passed:**
+
+![Edit Shirt page HTML validation passed](docs/htmlcheck-editshirt.jpg)
+
+The Edit Shirt page passed validation with no errors or warnings.
+
+### Public User Collection Page
+
+The initial validation found one heading hierarchy error. The Search Shirts heading used an `<h3>` directly after an `<h1>`, skipping the `<h2>` level.
+
+This was fixed by changing the heading to `<h2 class="h3">`, providing the correct heading structure while keeping the same visual size.
+
+**Initial validation – one error:**
+
+![Public User Collection initial HTML validation](docs/htmlcheck-usercollection.jpg)
+
+**Final validation – passed:**
+
+![Public User Collection final HTML validation](docs/htmlcheck-usercollection2.jpg)
+
+The Public User Collection page passed validation with no errors or warnings.
+
+### Edit Comment Page
+
+The Edit Comment page was checked using the W3C Markup Validation Service.
+
+**Final validation – passed:**
+
+![Edit Comment page HTML validation passed](docs/htmlcheck-editcomment.jpg)
+
+The Edit Comment page passed validation with no errors or warnings.
+
+### Delete Comment Page
+
+The Delete Comment page was checked using the W3C Markup Validation Service.
+
+**Final validation – passed:**
+
+![Delete Comment page HTML validation passed](docs/htmlcheck-deletecomment.jpg)
+
+The Delete Comment page passed validation with no errors or warnings.
+
+### Delete Shirt Page
+
+The Delete Shirt page was checked using the W3C Markup Validation Service.
+
+**Final validation – passed:**
+
+![Delete Shirt page HTML validation passed](docs/htmlcheck-deleteshirt.jpg)
+
+The Delete Shirt page passed validation with no errors or warnings.
