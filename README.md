@@ -1,5 +1,12 @@
 # Fabric of the Game
 
+
+## Project Links
+
+- **Live Website:** [Fabric of the Game](https://fabric-of-the-game-46d41c43bb12.herokuapp.com/)
+- **GitHub Repository:** [View the source code](https://github.com/domfoster1/fabric_of_the_game)
+
+
 ## About
 
 Fabric of the Game is a football shirt collecting and sharing website built using Django.
