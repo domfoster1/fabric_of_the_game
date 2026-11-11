@@ -145,6 +145,41 @@ The website uses a football heritage-inspired design, with a focus on football s
 The layout is designed to make it easy for users to showcase their collections, discover shirts belonging to other collectors and explore the history behind different football shirts.
 
 The colour scheme uses cream, navy, burgundy and white to create a traditional football collector feel.
+
+
+## Wireframes
+
+Wireframes were created during the planning stage to help visualise the layout and structure of Fabric of the Game on both laptop and mobile screens.
+
+The finished website follows the original wireframe designs closely, with a few small changes made during development to improve the layout, appearance and user experience.
+
+### Homepage
+
+**Laptop view**
+
+![Homepage laptop wireframe](docs/wireframes/FabricOfTheGame_homepage_laptop_view.jpg)
+
+**Mobile view**
+
+![Homepage mobile wireframe](docs/wireframes/FabricOfTheGame_mobile%20view.jpg)
+
+### Website layout
+
+**Laptop view**
+
+![Website laptop wireframe](docs/wireframes/FabricOfTheGame_laptop_view.jpg)
+
+### My Collection
+
+**Laptop view**
+
+![My Collection laptop wireframe](docs/wireframes/FabricOfTheGame_my_collection_laptop_view.jpg)
+
+**Mobile view**
+
+![My Collection mobile wireframe](docs/wireframes/FabricOfTheGame_my_collection_mobile%20view.jpg)
+
+
 ## Current Progress
 
 - [x] Django project created.
