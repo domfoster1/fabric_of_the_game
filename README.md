@@ -152,3 +152,11 @@ The following table shows the tests performed, the expected results and the actu
 | Shirt ownership permissions | Log in as a different user and view another user's collection. | The user can view the shirt but cannot edit or delete it. | The shirt was visible, but editing and deleting options were unavailable. | Pass |
 | Comment ownership permissions | Log in as a different user and view another user's comment. | The user cannot edit or delete another user's comment. | Edit and delete options were unavailable for another user's comment. | Pass |
 | Direct access to another user's edit page | Attempt to open another user's shirt edit URL while logged in as a different user. | Access is denied or the user is redirected. | Access was restricted successfully. | Pass |
+
+### Python Code Quality
+
+The Python code was checked using Flake8 to identify and fix formatting issues, including unused imports, long lines, trailing whitespace and inconsistent spacing.
+
+The project was also checked using Django's system check command. Both checks completed successfully with no remaining issues.
+![Flake8 check results](docs/flake8%20testing.jpg)
+
