@@ -22,6 +22,102 @@ The website aims to allow users to:
 - Edit and delete their own shirt listings.
 - Search and filter shirts uploaded by the community.
 
+
+## User Stories
+
+The following user stories were created and recorded as GitHub Issues during the planning and development of Fabric of the Game. Each user story describes a feature of the website and includes acceptance criteria to explain what the feature should achieve.
+
+### User Story 1 – Add Football Shirts to the Site with Pictures
+
+**As a user, I can add football shirts to the site so that I can store them in my collection.**
+
+**Acceptance Criteria:**
+- Add a football shirt and have it stored in My Collection.
+- Add a picture to the shirt post.
+- Add information about the shirt, including team, year, condition and size.
+
+**GitHub Issue Evidence:**
+
+![User Story 1 – Add Football Shirts](docs/user-stories/user-story-1.jpg)
+
+### User Story 2 – Filter Shirts
+
+**As a user, I can filter shirts so that I can look at specific shirts.**
+
+**Acceptance Criteria:**
+- Add a filter section to the homepage and My Collection page.
+- Provide buttons for users to select different filter options.
+- Allow users to select multiple filter options.
+
+**GitHub Issue Evidence:**
+
+![User Story 2 – Filter Shirts](docs/user-stories/user-story-2.jpg)
+
+### User Story 3 – Display Posts from Different Users on the Homepage
+
+**As a user, I can see posts from other users so that I can view their collections.**
+
+**Acceptance Criteria:**
+- Posts added by different users to My Collection are visible on the homepage.
+- Display all the information included in the original shirt post.
+- Allow users to comment on posts.
+
+**GitHub Issue Evidence:**
+
+![User Story 3 – Display Posts from Different Users](docs/user-stories/user-story-3.jpg)
+
+### User Story 4 – Edit and Delete Posts
+
+**As a user, I can edit and delete posts so that I can change or remove them when necessary.**
+
+**Acceptance Criteria:**
+- Display Edit and Delete buttons only on the user's own posts in My Collection.
+- Allow users to change shirt information.
+- Allow users to delete their own posts.
+
+**GitHub Issue Evidence:**
+
+![User Story 4 – Edit and Delete Posts](docs/user-stories/user-story-4.jpg)
+
+### User Story 5 – Account Registration
+
+**As a user, I can register so that I can start posting my own football shirt collection and commenting on other users' posts.**
+
+**Acceptance Criteria:**
+- Allow users to register an account using an email address.
+- Allow registered users to log in.
+- Only allow users to post when logged in.
+- Only allow users to comment when logged in.
+
+**GitHub Issue Evidence:**
+
+![User Story 5 – Account Registration](docs/user-stories/user-story-5.jpg)
+
+### User Story 6 – Approve or Reject Comments
+
+**As a site administrator, I can approve or reject comments so that I can monitor comments and reject any unacceptable content.**
+
+**Acceptance Criteria:**
+- Allow the administrator to approve comments.
+- Allow the administrator to reject comments.
+
+**GitHub Issue Evidence:**
+
+![User Story 6 – Approve or Reject Comments](docs/user-stories/user-story-6.jpg)
+
+### User Story 7 – Edit or Delete a Comment
+
+**As a user, I can edit or delete a comment so that I can retract a comment or correct mistakes.**
+
+**Acceptance Criteria:**
+- Allow logged-in users to edit their own comments.
+- Allow logged-in users to delete their own comments.
+
+**GitHub Issue Evidence:**
+
+![User Story 7 – Edit or Delete a Comment](docs/user-stories/user-story-7.jpg)
+
+
 ## Technologies Used
 
 The project uses the following technologies:
@@ -292,3 +388,27 @@ The Delete Shirt page was checked using the W3C Markup Validation Service.
 ![Delete Shirt page HTML validation passed](docs/htmlcheck-deleteshirt.jpg)
 
 The Delete Shirt page passed validation with no errors or warnings.
+
+## CSS Validation
+
+The website's custom CSS stylesheet was checked using the W3C CSS Validation Service.
+
+**Validation result – passed:**
+
+![CSS validation passed](docs/csscheck.jpg)
+
+The stylesheet passed validation with no errors.
+
+## Deployed Code and Link Checks
+
+The deployed website was checked to make sure there was no unnecessary commented-out code and that internal links worked correctly.
+
+The following checks were completed:
+
+- Checked the project files for commented-out code. Only useful explanatory comments were retained.
+- Tested the main navigation links.
+- Tested links to public user collections.
+- Tested shirt links and the Edit Shirt and Delete Shirt actions.
+- Tested the Edit Comment and Delete Comment actions.
+
+All tested links and actions worked correctly without producing broken links or 404 errors.
