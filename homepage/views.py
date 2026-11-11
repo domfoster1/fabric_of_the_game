@@ -44,4 +44,3 @@ def home(request):
         'country_choices': Shirt._meta.get_field('country').choices,
         'league_choices': Shirt._meta.get_field('league').choices,
     })
-    

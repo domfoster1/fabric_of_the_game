@@ -1,15 +1,12 @@
 """
 Views for the My Collection page.
 """
-from email.mime import image
-from urllib import request
 
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
-from .forms import ShirtForm, ShirtImageForm, RegistrationForm, CommentForm
-from .forms import ShirtForm
+from .forms import ShirtForm, RegistrationForm, CommentForm
 from .models import Shirt, ShirtImage, Comment
 
 
@@ -79,6 +76,7 @@ def add_shirt(request):
 
     return render(request, 'my_collection/add_shirt.html', {'form': form})
 
+
 @login_required
 def edit_shirt(request, shirt_id):
     """Allow a user to edit their own shirt."""
@@ -97,6 +95,7 @@ def edit_shirt(request, shirt_id):
 
     return render(request, 'my_collection/edit_shirt.html', {'form': form})
 
+
 @login_required
 def delete_shirt(request, shirt_id):
     """Allow a user to delete their own shirt."""
@@ -108,6 +107,7 @@ def delete_shirt(request, shirt_id):
         return redirect('my_collection')
 
     return render(request, 'my_collection/delete_shirt.html', {'shirt': shirt})
+
 
 def register(request):
     """Allow a new user to create an account."""
@@ -191,6 +191,7 @@ def add_comment(request, shirt_id):
 
     return redirect('user_collection', username=shirt.owner.username)
 
+
 @login_required
 def edit_comment(request, comment_id):
     """Allow a user to edit their own comment."""
@@ -202,7 +203,9 @@ def edit_comment(request, comment_id):
 
         if form.is_valid():
             form.save()
-            return redirect('user_collection', username=comment.shirt.owner.username)
+            return redirect('user_collection',
+                            username=comment.shirt.owner.username
+                            )
 
     else:
         form = CommentForm(instance=comment)
@@ -226,4 +229,3 @@ def delete_comment(request, comment_id):
     return render(request, 'my_collection/delete_comment.html', {
         'comment': comment
     })
-

@@ -1,12 +1,13 @@
+
 """
-Database models for football shirt collections.
+Football shirt collection models.
 """
 
 from django.db import models
 from django_countries import countries
-from django_countries.fields import CountryField
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
+
 
 COUNTRIES = [
     ('GB-ENG', 'England'),
@@ -19,6 +20,7 @@ COUNTRIES = [
     if code != 'GB'
 ]
 
+
 LEAGUES = [
     ('Premier League', 'Premier League'),
     ('Championship', 'Championship'),
@@ -26,12 +28,13 @@ LEAGUES = [
     ('League Two', 'League Two'),
     ('Scottish Premiership', 'Scottish Premiership'),
     ('Scottish Championship', 'Scottish Championship'),
-    ('Cymru Premier', 'Cymru Premier'),
-    ('NIFL Premiership', 'NIFL Premiership'),
     ('La Liga', 'La Liga'),
     ('Bundesliga', 'Bundesliga'),
     ('Serie A', 'Serie A'),
     ('Ligue 1', 'Ligue 1'),
+    ('Primeira Liga', 'Primeira Liga'),
+    ('Liga Portugal 2', 'Liga Portugal 2'),
+    ('Liga 3', 'Liga 3'),
     ('MLS', 'MLS'),
     ('Brazilian Serie A', 'Brazilian Serie A'),
     ('J1 League', 'J1 League'),
@@ -39,6 +42,7 @@ LEAGUES = [
     ('J3 League', 'J3 League'),
     ('Other', 'Other'),
 ]
+
 
 class Shirt(models.Model):
     """Store information about a football shirt."""
@@ -53,33 +57,36 @@ class Shirt(models.Model):
     season = models.CharField(max_length=30)
 
     manufacturer = models.CharField(
-    max_length=30,
-    choices=[
-        ('Adidas', 'Adidas'),
-        ('Nike', 'Nike'),
-        ('Puma', 'Puma'),
-        ('Umbro', 'Umbro'),
-        ('New Balance', 'New Balance'),
-        ('Kappa', 'Kappa'),
-        ('Macron', 'Macron'),
-        ('Hummel', 'Hummel'),
-        ('Castore', 'Castore'),
-        ('Other', 'Other'),
-    ]
+        max_length=30,
+        choices=[
+            ('Adidas', 'Adidas'),
+            ('Nike', 'Nike'),
+            ('Puma', 'Puma'),
+            ('Umbro', 'Umbro'),
+            ('New Balance', 'New Balance'),
+            ('Kappa', 'Kappa'),
+            ('Macron', 'Macron'),
+            ('Hummel', 'Hummel'),
+            ('Castore', 'Castore'),
+            ('Other', 'Other'),
+        ]
     )
 
     country = models.CharField(
-    max_length=100,
-    choices=COUNTRIES,
+        max_length=100,
+        choices=COUNTRIES,
     )
 
     league = models.CharField(
-    max_length=50,
-    choices=LEAGUES,
+        max_length=50,
+        choices=LEAGUES,
     )
 
     player_name = models.CharField(max_length=100, blank=True)
-    shirt_number = models.PositiveSmallIntegerField(null=True, blank=True)
+    shirt_number = models.PositiveSmallIntegerField(
+        null=True,
+        blank=True
+    )
 
     shirt_type = models.CharField(
         max_length=20,
@@ -135,28 +142,34 @@ class Shirt(models.Model):
         """Show the team and season of the shirt."""
         return f"{self.team} - {self.season}"
 
+
 class ShirtImage(models.Model):
     """Store photographs of a football shirt."""
 
     image = models.ImageField(upload_to='shirt_images/')
-    shirt = models.ForeignKey(Shirt, on_delete=models.CASCADE, related_name='images')
+    shirt = models.ForeignKey(
+        Shirt,
+        on_delete=models.CASCADE,
+        related_name='images'
+    )
     is_primary = models.BooleanField(default=False)
     date_uploaded = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
         """Show which shirt the photograph belongs to."""
         return f"Photo of {self.shirt}"
 
+
 # Delete the photograph file when its database record is deleted
 @receiver(post_delete, sender=ShirtImage)
 def delete_shirt_image_file(sender, instance, **kwargs):
-
     """Delete the uploaded photograph from storage."""
 
     if instance.image:
-        instance.image.delete(save=False)   
+        instance.image.delete(save=False)
+
 
 class Comment(models.Model):
-
     """Store comments left on football shirts."""
 
     shirt = models.ForeignKey(
@@ -178,4 +191,3 @@ class Comment(models.Model):
     def __str__(self):
         """Show who wrote the comment."""
         return f"Comment by {self.owner} on {self.shirt}"
-

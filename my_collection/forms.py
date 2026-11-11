@@ -92,7 +92,9 @@ class RegistrationForm(UserCreationForm):
         email = self.cleaned_data['email']
 
         if User.objects.filter(email=email).exists():
-            raise forms.ValidationError('This email address is already registered.')
+            raise forms.ValidationError(
+                'This email address is already registered.'
+                    )
 
         return email
 
@@ -108,4 +110,4 @@ class CommentForm(forms.ModelForm):
                 'placeholder': 'Write a comment...',
                 'rows': 3
             })
-        }    
+        }
