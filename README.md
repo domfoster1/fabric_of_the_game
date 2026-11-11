@@ -285,11 +285,11 @@ A further warning was fixed by changing the Create an Account heading from `<h3>
 
 **Initial validation – five errors:**
 
-![Registration page initial HTML validation](docs/register-htmlcheck.jpg)
+![Registration page initial HTML validation](docs/register-htmlcheck-register1.jpg)
 
 **Second validation – one warning remaining:**
 
-![Registration page second HTML validation](docs/register-htmlcheck2.jpg)
+![Registration page second HTML validation](docs/register-htmlcheck-register2.jpg)
 
 **Final validation – passed:**
 
